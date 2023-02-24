@@ -1,0 +1,47 @@
+ID,Crop,Lini,Ldev,Lmid,Llate,KcIni,KcMid,KcEnd,MaxHeighCrop,Category
+001,Haricots verts,20,30,30,10,0.5,1.05,0.9,0.4,Legume
+002,Haricots secs,20,30,40,20,0.4,1.15,0.35,0.4,Legume
+003,F�verole,20,30,35,15,0.5,1.15,1.1,0.8,Legume
+004,f�ve,20,30,35,15,0.5,1.15,1.1,0.8,Legume
+005,Grame verte,20,30,30,20,0.4,1.05,0.6,0.4,Legume
+006,ni�b�,20,30,30,20,0.4,1.05,0.35,0.4,Legume
+007,Arachide,35,45,35,25,0.4,1.15,0.6,0.4,Legume
+008,Lentille,20,30,60,40,0.4,1.1,0.3,0.5,Legume
+009,Petits pois,20,30,35,15,0.5,1.15,1.1,0.5,Legume
+010,Soja,20,35,60,25,0.4,1.15,0.5,0.75,Legume
+011,Graines de ricin,25,40,65,50,0.35,1.15,0.55,0.3,Oil Crops
+012,Carthame,25,35,55,30,0.35,1.1,0.35,0.6,Oil Crops
+013,S�same,20,30,40,20,0.35,1.1,0.25,1,Oil Crops
+014,Tournesol,25,35,45,25,0.35,1.1,0.35,2,Oil Crops
+015,Artichaut,40,40,250,30,0.5,1,0.95,0.7,Perrinial Vegatables
+016,Asperges,90,30,200,45,0.5,0.95,0.3,0.5,Perrinial Vegatables
+017,Fraises,10,21,18,18,0.4,0.85,0.75,0.2,Perrinial Vegatables
+018,Betteraves,15,25,20,10,0.5,1.05,0.95,0.4,Roots and Tubers
+019,Manioc 1ere ann�e,20,40,90,60,0.3,0.8,0.3,1,Roots and Tubers
+020,Manioc 2eme ann�e,150,40,110,60,0.3,1.1,0.5,1.5,Roots and Tubers
+021,Pomme de terre,30,35,50,30,0.5,1.15,0.75,0.6,Roots and Tubers
+022,Patate douce,20,30,60,40,0.5,1.15,0.65,0.4,Roots and Tubers
+023,Betterave � sucre,25,35,50,50,0.35,1.2,0.70,0.5,Roots and Tubers
+024,Broccoli,35,45,40,15,0.7,1.05,0.95,0.3,Small Vegetables
+025,Chou,40,60,50,15,0.7,1.05,0.95,0.4,Small Vegetables
+026,Carottes,30,40,60,20,0.7,1.05,0.95,0.3,Small Vegetables
+027,Chou-fleur,35,50,40,15,0.7,1.05,0.95,0.4,Small Vegetables
+028,C�leri,25,40,45,15,0.7,1.05,1,0.6,Small Vegetables
+029,Crucif�res,20,30,20,10,0.7,1,0.7,0.3,Small Vegetables
+030,Salade,20,30,15,10,0.7,1,0.95,0.3,Small Vegetables
+031,Oignon sec,15,25,70,40,0.7,1.05,0.75,0.4,Small Vegetables
+032,Onion green,20,45,20,10,0.7,1,1,0.3,Small Vegetables
+033,Onion seed,20,45,165,45,0.7,1.05,0.8,0.5,Small Vegetables
+034,�pinard,20,30,40,10,0.7,1,0.95,0.3,Small Vegetables
+035,radis,5,10,15,5,0.7,0.9,0.85,0.3,Small Vegetables
+036,Cantaloup,30,45,35,10,0.5,0.85,0.6,0.3,Vegetable cucumbers family
+037,Concombre,20,30,40,15,0.6,1.002,0.75,0.3,Vegetable cucumbers family
+038,courge d'hiver,25,35,35,25,0.5,1,0.8,0.4,Vegetable cucumbers family
+039,Citrouille,25,35,35,25,0.5,1,0.8,0.4,Vegetable cucumbers family
+040,courgette,20,30,25,15,0.5,0.95,0.75,0.3,Vegetable cucumbers family
+041,courge,20,30,25,15,0.5,0.95,0.75,0.3,Vegetable cucumbers family
+042,Melons,30,30,50,30,0.5,1.05,0.75,0.4,Vegetable cucumbers family
+043,Past�que,10,20,20,30,0.4,1,0.75,0.4,Vegetable cucumbers family
+044,Aubergine,30,45,40,25,0.6,1.05,0.9,0.8,Vegetable solonum family
+045,Poivrons doux ,30,40,110,30,0.6,1.05,0.9,0.7,Vegetable solonum family
+046,Tomate,25,40,60,30,0.6,1.15,0.8,0.6,Vegetable solonum family
