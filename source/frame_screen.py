@@ -4,6 +4,7 @@ from constants import constants
 import string
 from supervision import Supervision
 from mode_irrigation import Mode_irrigation
+from parametre_irrigation import parametre_irrigation
 class FrameScreen(CTK.CTkTabview):
     def __init__(self,wind):
         super().__init__(master = wind,
@@ -23,3 +24,5 @@ class FrameScreen(CTK.CTkTabview):
     def disp_components(self):
         self.supervision_object = Supervision(self.tab("Supervision"))
         self.modeIrrigation_object = Mode_irrigation(self.tab("Mode Irrigation"))
+        self.parametreIrrigation_object = parametre_irrigation(self.tab("Parametres Irrigation"))
+        

@@ -6,46 +6,46 @@ from constants import constants
 from PIL import Image
 from Conf import Irrigation
 
-class Mode_irrigation:
+class parametre_irrigation:
 
     def __init__(self,master,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.menu_button = {}
-        self.mode_irrigation_frame = {}
-        self.drip_entries = {}
-        self.drip_buttons = {}
-        self.aspersion_entries = {}
-        self.aspersion_buttons = {}
-        self.Mode_entry_GG = []
+        self.param_irrigation_frame = {}
+        self.irrigation_entries = {}
+        self.irrigation_buttons = {}
+        self.culture_entries = {}
+        self.culture_buttons = {}
+        
 
 
         self.init_components(master)
         self.disp_components()
 
-    def drip_component(self):
-        #drip fields
-        entries_list = ["distance_ligne", "espace_goutteur", "debit_eau"]
-        entries_text = ["distance entre les lignes(Cm)", "Espace entre les goutteurs (cm)","débit d'eau(L/heure)"]
+    def irrigation_component(self):
 
-        self.drip_frame = CTK.CTkFrame(master = self.mode_irrigation_frame["tabview_1"].tab("drip"),
+        entries_list = ["mode_irrigation", "frequence_irrigation", "heure_irrigation"]
+        entries_text = ["mode d'irrigation", "frequence d'irrigation","heure d'irrigation"]
+
+        self.irrigation_frame = CTK.CTkFrame(master = self.param_irrigation_frame["tabview_1"].tab("irrigation"),
                                         width = 330,
                                         height = 330,
                                         fg_color= "transparent",
                                         corner_radius = 15)
 
-        self.drip_title = CTK.CTkLabel(master = self.mode_irrigation_frame["tabview_1"].tab("drip"),
-                                                    text="Table de configuration Mode Goutte à Goutte",
+        self.irrigation_title = CTK.CTkLabel(master = self.param_irrigation_frame["tabview_1"].tab("irrigation"),
+                                                    text="Table de configuration des parametres d'irrigation",
                                                     font = CTK.CTkFont(size = 18,weight = "bold"))
-
+        """
         for indx in range(0,3):
             
-            self.drip_entries[entries_list[indx]] = CTK.CTkEntry(master = self.drip_frame,
+            self.irrigation_entries[entries_list[indx]] = CTK.CTkEntry(master = self.irrigation_frame,
                                                                 placeholder_text = entries_text[indx],
                                                                 font = CTK.CTkFont(size = 14),
                                                                 width = 220,
                                                                 height = 35)
             
-            self.drip_buttons[entries_list[indx]] =  CTK.CTkButton(master = self.drip_frame,
+            self.irrigation_buttons[entries_list[indx]] =  CTK.CTkButton(master = self.irrigation_frame,
                                                     text="appliquer",
                                                     width = 140,
                                                     height = 30,
@@ -56,7 +56,7 @@ class Mode_irrigation:
                                                     anchor = "center"
                                                     )
             
-        self.drip_buttons["appliquer tout"] = CTK.CTkButton(master = self.mode_irrigation_frame["tabview_1"].tab("drip"),
+        self.irrigation_buttons["appliquer tout"] = CTK.CTkButton(master = self.param_irrigation_frame["tabview_1"].tab("irrigation"),
                                                     text="appliquer tout",
                                                     width = 180,
                                                     height = 30,
@@ -66,11 +66,11 @@ class Mode_irrigation:
                                                     corner_radius = 15,
                                                     anchor = "center"
                                                     
-                                                    )
-    
-    def aspersion_components(self):
+                                                    )"""
+    """
+    def culture_components(self):
         
-        entries_list = ["diam_gouteur", "ecart_gouteur", "distance_ligne","pression"]
+        entries_list = ["surface", "ecart_gouteur", "distance_ligne","pression"]
         entries_text = ["Diamètre du gouteur (mm)", "Ecart entre les asperseurs (cm)","Distance entre les lignes (cm)","Pression (bar)"]
 
         self.aspersion_frame = CTK.CTkFrame(master = self.mode_irrigation_frame["tabview_1"].tab("aspersion"),
@@ -112,21 +112,22 @@ class Mode_irrigation:
                                                     corner_radius = 15,
                                                     anchor = "center"
                                                     
-                                                    )
+                                                 )
+                                                 """
     def init_components(self,master):
 
-        button_list = ["drip","aspersion"]
-        button_text = ["goutte à goutte",'aspersion']
-        button_icons = ["drip.png","aspersion.png"]
+        button_list = ["irrigation","culture"]
+        button_text = ["irrigation","culture"]
+        button_icons = ["irrigation.png","culture.png"]
 
-        self.mode_irrigation_frame["buttons_frame"] = CTK.CTkFrame(master = master,
+        self.param_irrigation_frame["buttons_frame"] = CTK.CTkFrame(master = master,
                                                                 width = 270,
                                                                 height = 110,
                                                                 fg_color= "transparent",
                                                                 corner_radius = 15
                                                                 )
         
-        self.mode_irrigation_frame["tabview_1"] = CTK.CTkTabview(master = master,
+        self.param_irrigation_frame["tabview_1"] = CTK.CTkTabview(master = master,
                                                                 width = 460,
                                                                 height = 330,
                                                                 fg_color= "#1E1E1E",
@@ -141,7 +142,7 @@ class Mode_irrigation:
                                                                 )
 
         for button in range(0,2):
-            self.menu_button[button_list[button]] = CTK.CTkButton(master = self.mode_irrigation_frame["buttons_frame"],
+            self.menu_button[button_list[button]] = CTK.CTkButton(master = self.param_irrigation_frame["buttons_frame"],
                                                     text=button_text[button],
                                                     width = 90,
                                                     height = 80,
@@ -154,40 +155,41 @@ class Mode_irrigation:
                                                     anchor = "center"
                                                     )
             
-        self.menu_button["drip"].configure(command =  self.push_drip)
-        self.menu_button["aspersion"].configure(command =  self.push_aspersion)
+        self.menu_button["irrigation"].configure(command =  self.push_irrigation)
+        self.menu_button["culture"].configure(command =  self.push_culture)
 
         for button in button_list:
-            self.mode_irrigation_frame["tabview_1"].add(button)
+            self.param_irrigation_frame["tabview_1"].add(button)
         else:
-            self.mode_irrigation_frame["tabview_1"].add("     ")
+            self.param_irrigation_frame["tabview_1"].add("     ")
 
-        self.drip_component()
-        self.aspersion_components()
+        self.irrigation_component()
+        # self.culture_components()
 
 
 
     def disp_components(self):
-        self.mode_irrigation_frame["buttons_frame"].place(relx = 0, rely = 0.8)
-        self.mode_irrigation_frame["tabview_1"].place(relx = 0.005,rely = 0.002)
+        self.param_irrigation_frame["buttons_frame"].place(relx = 0, rely = 0.8)
+        self.param_irrigation_frame["tabview_1"].place(relx = 0.005,rely = 0.002)
 
-        button_list = ["drip", "aspersion"]
+        button_list = ["irrigation", "culture"]
         i = 0
         for button in button_list:
             self.menu_button[button].grid(row = 0,column = i, padx =5,pady =5)
             i+=1
-
-        self.drip_title.place(relx = 0.04,rely =0.05)
-        self.drip_frame.place(relx = 0.07,rely =0.25)
-        self.drip_buttons["appliquer tout"].place(relx = 0.28,rely =0.8)
-        self.drip_entries["distance_ligne"].grid(row = 0, column = 0,padx = 4,pady = 4)
-        self.drip_entries["espace_goutteur"].grid(row = 1, column = 0,padx = 4,pady = 4)
-        self.drip_entries["debit_eau"].grid(row = 2, column = 0,padx = 4,pady = 4)
-        self.drip_buttons["distance_ligne"].grid(row = 0, column = 1,padx = 4,pady = 4)
-        self.drip_buttons["espace_goutteur"].grid(row = 1, column = 1,padx = 4,pady = 4)
-        self.drip_buttons["debit_eau"].grid(row = 2, column = 1,padx = 4,pady = 4)
-
-
+        
+        self.irrigation_title.place(relx = 0.04,rely =0.05)
+        self.irrigation_frame.place(relx = 0.07,rely =0.25)
+        """
+        self.irrigation_buttons["appliquer tout"].place(relx = 0.28,rely =0.8)
+        self.irrigation_entries["distance_ligne"].grid(row = 0, column = 0,padx = 4,pady = 4)
+        self.irrigation_entries["espace_goutteur"].grid(row = 1, column = 0,padx = 4,pady = 4)
+        self.irrigation_entries["debit_eau"].grid(row = 2, column = 0,padx = 4,pady = 4)
+        self.irrigation_buttons["distance_ligne"].grid(row = 0, column = 1,padx = 4,pady = 4)
+        self.irrigation_buttons["espace_goutteur"].grid(row = 1, column = 1,padx = 4,pady = 4)
+        self.irrigation_buttons["debit_eau"].grid(row = 2, column = 1,padx = 4,pady = 4)
+        """
+        """
         self.aspersion_title.place(relx = 0.06,rely =0.05)
         self.aspersion_frame.place(relx = 0.1,rely =0.2)
         self.aspersion_entries["diam_gouteur"].grid(row = 0, column = 0,padx = 4,pady = 4)
@@ -199,17 +201,17 @@ class Mode_irrigation:
         self.aspersion_buttons["distance_ligne"].grid(row = 2, column = 1,padx = 4,pady = 4)
         self.aspersion_buttons["pression"].grid(row = 3, column = 1,padx = 4,pady = 4)
         self.aspersion_buttons["appliquer tout"].place(relx = 0.28,rely =0.87)
-        
+        """
 
 
-    def push_drip(self):
-        self.mode_irrigation_frame["tabview_1"].set("drip")
+    def push_irrigation(self):
+        self.param_irrigation_frame["tabview_1"].set("irrigation")
 
-    def push_aspersion(self):
-        self.mode_irrigation_frame["tabview_1"].set("aspersion")
+    def push_culture(self):
+        self.param_irrigation_frame["tabview_1"].set("culture")
 
     def appliquer_mode_GG1(self):
         for key in Irrigation.Mode_data_GG.keys():
-           Irrigation.Mode_data_GG[key] = int(self.drip_entries[key].get())
+           Irrigation.Mode_data_GG[key] = int(self.irrigation_entries[key].get())
         
         print(Irrigation.Mode_data_GG)
