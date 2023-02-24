@@ -3,6 +3,7 @@
 import customtkinter as CTK
 from tkinter import messagebox
 from constants import constants
+from tkcalendar import Calendar
 from PIL import Image
 from Conf import Irrigation
 
@@ -35,26 +36,40 @@ class parametre_irrigation:
 
         self.irrigation_title = CTK.CTkLabel(master = self.param_irrigation_frame["tabview_1"].tab("irrigation"),
                                                     text="Table de configuration des parametres d'irrigation",
-                                                    font = CTK.CTkFont(size = 18,weight = "bold"))
-        """
-        for indx in range(0,3):
-            
-            self.irrigation_entries[entries_list[indx]] = CTK.CTkEntry(master = self.irrigation_frame,
-                                                                placeholder_text = entries_text[indx],
+                                                    font = CTK.CTkFont(size = 15,weight = "bold"))
+
+
+
+        self.irrigation_entries["mode_irrigation"] = CTK.CTkComboBox(master = self.irrigation_frame,
+                                                            width=160,
+                                                            height=30,
+                                                            corner_radius=13,
+                                                            values=["goutte à goutte", "aspersion"],   
+                                                            font = CTK.CTkFont(size = 14)
+
+                                                           )
+        
+        self.irrigation_entries["frequence_irrigation"] = CTK.CTkEntry(master = self.irrigation_frame,
+                                                                placeholder_text = entries_text[1],
                                                                 font = CTK.CTkFont(size = 14),
-                                                                width = 220,
+                                                                width = 190,
                                                                 height = 35)
-            
-            self.irrigation_buttons[entries_list[indx]] =  CTK.CTkButton(master = self.irrigation_frame,
-                                                    text="appliquer",
-                                                    width = 140,
-                                                    height = 30,
-                                                    font = CTK.CTkFont(size = 12,weight = "bold"),
-                                                    fg_color= "#209617",
-                                                    hover_color="#30CD4F",
-                                                    corner_radius = 15,
-                                                    anchor = "center"
-                                                    )
+        
+
+        # self.irrigation_entries["heure_irrigation"] = CTK.CTkToplevel(Calendar(self.irrigation_frame, 
+        #                                                     selectmode='day',
+        #                                                     year=2022, month=2, day=5)
+        for i in range(3):
+            self.irrigation_buttons[entries_list[i]] =  CTK.CTkButton(master = self.irrigation_frame,
+                                                                            text="appliquer",
+                                                                          width = 140,
+                                                                            height = 30,
+                                                                            font = CTK.CTkFont(size = 12,weight = "bold"),
+                                                                            fg_color= "#209617",
+                                                                            hover_color="#30CD4F",
+                                                                            corner_radius = 15,
+                                                                            anchor = "center"
+                                                                            )
             
         self.irrigation_buttons["appliquer tout"] = CTK.CTkButton(master = self.param_irrigation_frame["tabview_1"].tab("irrigation"),
                                                     text="appliquer tout",
@@ -66,7 +81,7 @@ class parametre_irrigation:
                                                     corner_radius = 15,
                                                     anchor = "center"
                                                     
-                                                    )"""
+                                                    )
     """
     def culture_components(self):
         
@@ -180,15 +195,15 @@ class parametre_irrigation:
         
         self.irrigation_title.place(relx = 0.04,rely =0.05)
         self.irrigation_frame.place(relx = 0.07,rely =0.25)
-        """
+        
         self.irrigation_buttons["appliquer tout"].place(relx = 0.28,rely =0.8)
-        self.irrigation_entries["distance_ligne"].grid(row = 0, column = 0,padx = 4,pady = 4)
-        self.irrigation_entries["espace_goutteur"].grid(row = 1, column = 0,padx = 4,pady = 4)
-        self.irrigation_entries["debit_eau"].grid(row = 2, column = 0,padx = 4,pady = 4)
-        self.irrigation_buttons["distance_ligne"].grid(row = 0, column = 1,padx = 4,pady = 4)
-        self.irrigation_buttons["espace_goutteur"].grid(row = 1, column = 1,padx = 4,pady = 4)
-        self.irrigation_buttons["debit_eau"].grid(row = 2, column = 1,padx = 4,pady = 4)
-        """
+        self.irrigation_entries["mode_irrigation"].grid(row = 0, column = 0,padx = 4,pady = 4)
+        self.irrigation_entries["frequence_irrigation"].grid(row = 1, column = 0,padx = 4,pady = 4)
+        self.irrigation_entries["heure_irrigation"].grid(row = 2, column = 0,padx = 4,pady = 4)
+        self.irrigation_buttons["mode_irrigation"].grid(row = 0, column = 1,padx = 4,pady = 4)
+        self.irrigation_buttons["frequence_irrigation"].grid(row = 1, column = 1,padx = 4,pady = 4)
+        self.irrigation_buttons["heure_irrigation"].grid(row = 2, column = 1,padx = 4,pady = 4)
+ 
         """
         self.aspersion_title.place(relx = 0.06,rely =0.05)
         self.aspersion_frame.place(relx = 0.1,rely =0.2)
