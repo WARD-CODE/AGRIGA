@@ -138,8 +138,8 @@ class Supervision:
                                                     width = 90,
                                                     height = 30,
                                                     font = CTK.CTkFont(size = 12,weight = "bold"),
-                                                    fg_color= "#209617",
-                                                    hover_color="#30CD4F",
+                                                    fg_color= "#184873",
+                                                    hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center",
                                                     command = lambda: self.actionneurs_creator(self.actionneurs_components["pompe"].get(),self.actionneurs_components["electrovanne"].get())

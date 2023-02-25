@@ -65,8 +65,8 @@ class parametre_irrigation:
                                                                           width = 140,
                                                                             height = 30,
                                                                             font = CTK.CTkFont(size = 12,weight = "bold"),
-                                                                            fg_color= "#209617",
-                                                                            hover_color="#30CD4F",
+                                                                            fg_color= "#184873",
+                                                                            hover_color="#295a87",
                                                                             corner_radius = 15,
                                                                             anchor = "center"
                                                                             )
@@ -76,59 +76,84 @@ class parametre_irrigation:
                                                     width = 180,
                                                     height = 30,
                                                     font = CTK.CTkFont(size = 12,weight = "bold"),
-                                                    fg_color= "#209617",
-                                                    hover_color="#30CD4F",
+                                                    fg_color= "#184873",
+                                                    hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center"
                                                     
                                                     )
-    """
-    def culture_components(self):
+    
+    def culture_components(self): 
+        buttons_list = ["surface","culture", "Kc"]
         
-        entries_list = ["surface", "ecart_gouteur", "distance_ligne","pression"]
-        entries_text = ["Diamètre du gouteur (mm)", "Ecart entre les asperseurs (cm)","Distance entre les lignes (cm)","Pression (bar)"]
-
-        self.aspersion_frame = CTK.CTkFrame(master = self.mode_irrigation_frame["tabview_1"].tab("aspersion"),
+        self.culture_frame = CTK.CTkFrame(master = self.param_irrigation_frame["tabview_1"].tab("culture"),
                                         width = 340,
                                         height = 330,
                                         fg_color= "transparent",
                                         corner_radius = 15)
 
-        self.aspersion_title = CTK.CTkLabel(master = self.mode_irrigation_frame["tabview_1"].tab("aspersion"),
-                                                    text="Table de configuration Mode Aspersion",
+        self.culture_title = CTK.CTkLabel(master = self.param_irrigation_frame["tabview_1"].tab("culture"),
+                                                    text="Table de configuration des parametres de culture",
                                                     font = CTK.CTkFont(size = 18,weight = "bold"))
 
-        for indx in range(0,4):
             
-            self.aspersion_entries[entries_list[indx]] = CTK.CTkEntry(master = self.aspersion_frame,
-                                                                placeholder_text = entries_text[indx],
-                                                                font = CTK.CTkFont(size = 14),
-                                                                width =210,
-                                                                height = 35)
-            
-            self.aspersion_buttons[entries_list[indx]] =  CTK.CTkButton(master = self.aspersion_frame,
+        self.culture_entries["surface"] = CTK.CTkEntry(master = self.culture_frame,
+                                                        placeholder_text = "surface",
+                                                        font = CTK.CTkFont(size = 14),
+                                                        width =170,
+                                                        height = 35)
+        
+        self.culture_entries["culture"] =  CTK.CTkComboBox(master = self.culture_frame,
+                                                            width=170,
+                                                            height=30,
+                                                            corner_radius=13,
+                                                            values=["empty"],   
+                                                            font = CTK.CTkFont(size = 14)
+                                                            )
+        
+        self.culture_entries["element"] =  CTK.CTkComboBox(master = self.culture_frame,
+                                                            width=160,
+                                                            height=30,
+                                                            corner_radius=13,
+                                                            values=["empty"],   
+                                                            font = CTK.CTkFont(size = 14)
+                                                            )
+        
+        self.culture_entries["Kc_saison"] = CTK.CTkEntry(master = self.culture_frame,
+                                                        placeholder_text = "(jj/mm/aaaa)",
+                                                        font = CTK.CTkFont(size = 14),
+                                                        width =100,
+                                                        height = 35)
+
+        self.culture_entries["Kc_value"] = CTK.CTkEntry(master = self.culture_frame,
+                                                placeholder_text = "valeur Kc",
+                                                font = CTK.CTkFont(size = 14),
+                                                width =100,
+                                                height = 35)
+        
+        for button in buttons_list:
+            self.culture_buttons[button] =  CTK.CTkButton(master = self.culture_frame,
                                                     text="appliquer",
-                                                    width = 120,
+                                                    width = 70,
                                                     height = 30,
                                                     font = CTK.CTkFont(size = 12,weight = "bold"),
-                                                    fg_color= "#209617",
-                                                    hover_color="#30CD4F",
+                                                    fg_color= "#184873",
+                                                    hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center"
-                                                    )
+                                                    )   
             
-        self.aspersion_buttons["appliquer tout"] = CTK.CTkButton(master = self.mode_irrigation_frame["tabview_1"].tab("aspersion"),
+        self.culture_buttons["appliquer tout"] = CTK.CTkButton(master = self.param_irrigation_frame["tabview_1"].tab("culture"),
                                                     text="appliquer tout",
                                                     width = 180,
                                                     height = 30,
                                                     font = CTK.CTkFont(size = 12,weight = "bold"),
-                                                    fg_color= "#209617",
-                                                    hover_color="#30CD4F",
+                                                    fg_color= "#184873",
+                                                    hover_color="#295a87",
                                                     corner_radius = 15,
-                                                    anchor = "center"
-                                                    
+                                                    anchor = "center"    
                                                  )
-                                                 """
+                                                 
     def init_components(self,master):
 
         button_list = ["irrigation","culture"]
@@ -179,7 +204,7 @@ class parametre_irrigation:
             self.param_irrigation_frame["tabview_1"].add("     ")
 
         self.irrigation_component()
-        # self.culture_components()
+        self.culture_components()
 
 
 
@@ -199,24 +224,24 @@ class parametre_irrigation:
         self.irrigation_buttons["appliquer tout"].place(relx = 0.28,rely =0.8)
         self.irrigation_entries["mode_irrigation"].grid(row = 0, column = 0,padx = 4,pady = 4)
         self.irrigation_entries["frequence_irrigation"].grid(row = 1, column = 0,padx = 4,pady = 4)
-        self.irrigation_entries["heure_irrigation"].grid(row = 2, column = 0,padx = 4,pady = 4)
+        # self.irrigation_entries["heure_irrigation"].grid(row = 2, column = 0,padx = 4,pady = 4)
         self.irrigation_buttons["mode_irrigation"].grid(row = 0, column = 1,padx = 4,pady = 4)
         self.irrigation_buttons["frequence_irrigation"].grid(row = 1, column = 1,padx = 4,pady = 4)
         self.irrigation_buttons["heure_irrigation"].grid(row = 2, column = 1,padx = 4,pady = 4)
  
-        """
-        self.aspersion_title.place(relx = 0.06,rely =0.05)
-        self.aspersion_frame.place(relx = 0.1,rely =0.2)
-        self.aspersion_entries["diam_gouteur"].grid(row = 0, column = 0,padx = 4,pady = 4)
-        self.aspersion_entries["ecart_gouteur"].grid(row = 1, column = 0,padx = 4,pady = 4)
-        self.aspersion_entries["distance_ligne"].grid(row = 2, column = 0,padx = 4,pady = 4)
-        self.aspersion_entries["pression"].grid(row = 3, column = 0,padx = 4,pady = 4)
-        self.aspersion_buttons["diam_gouteur"].grid(row = 0, column = 1,padx = 4,pady = 4)
-        self.aspersion_buttons["ecart_gouteur"].grid(row = 1, column = 1,padx = 4,pady = 4)
-        self.aspersion_buttons["distance_ligne"].grid(row = 2, column = 1,padx = 4,pady = 4)
-        self.aspersion_buttons["pression"].grid(row = 3, column = 1,padx = 4,pady = 4)
-        self.aspersion_buttons["appliquer tout"].place(relx = 0.28,rely =0.87)
-        """
+        
+        self.culture_title.place(relx = 0.06,rely =0.05)
+        self.culture_frame.place(relx = 0.03,rely =0.2)
+        self.culture_entries["surface"].grid(row = 0, column = 0,padx = 4,pady = 4)
+        self.culture_entries["culture"].grid(row = 1, column = 0,padx = 4,pady = 4)
+        self.culture_entries["element"].grid(row = 1, column = 1,padx = 4,pady = 4)
+        self.culture_entries["Kc_saison"].grid(row = 2, column = 0,padx = 4,pady = 4)
+        self.culture_entries["Kc_value"].grid(row = 2, column = 1,padx = 4,pady = 4)
+        self.culture_buttons["surface"].grid(row = 0, column = 2,padx = 4,pady = 4)
+        self.culture_buttons["culture"].grid(row = 1, column = 2,padx = 4,pady = 4)
+        self.culture_buttons["Kc"].grid(row = 2, column = 2,padx = 4,pady = 4)
+        self.culture_buttons["appliquer tout"].place(relx = 0.28,rely =0.87)
+        
 
 
     def push_irrigation(self):

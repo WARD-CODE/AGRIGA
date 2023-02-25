@@ -46,12 +46,13 @@ class Mode_irrigation:
                                                                 height = 35)
             
             self.drip_buttons[entries_list[indx]] =  CTK.CTkButton(master = self.drip_frame,
-                                                    text="appliquer",
-                                                    width = 140,
+                                                    text="",
+                                                    width = 30,
                                                     height = 30,
                                                     font = CTK.CTkFont(size = 12,weight = "bold"),
-                                                    fg_color= "#209617",
-                                                    hover_color="#30CD4F",
+                                                    fg_color= "#184873",
+                                                    image=CTK.CTkImage(Image.open("images/appliquer.png"),size = (25,25)),
+                                                    hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center"
                                                     )
@@ -61,8 +62,8 @@ class Mode_irrigation:
                                                     width = 180,
                                                     height = 30,
                                                     font = CTK.CTkFont(size = 12,weight = "bold"),
-                                                    fg_color= "#209617",
-                                                    hover_color="#30CD4F",
+                                                    fg_color= "#184873",
+                                                    hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center"
                                                     
@@ -92,12 +93,13 @@ class Mode_irrigation:
                                                                 height = 35)
             
             self.aspersion_buttons[entries_list[indx]] =  CTK.CTkButton(master = self.aspersion_frame,
-                                                    text="appliquer",
-                                                    width = 120,
+                                                    text="",
+                                                    width = 30,
                                                     height = 30,
                                                     font = CTK.CTkFont(size = 12,weight = "bold"),
-                                                    fg_color= "#209617",
-                                                    hover_color="#30CD4F",
+                                                    image=CTK.CTkImage(Image.open("images/appliquer.png"),size = (25,25)),
+                                                    fg_color= "#184873",
+                                                    hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center"
                                                     )
@@ -107,8 +109,8 @@ class Mode_irrigation:
                                                     width = 180,
                                                     height = 30,
                                                     font = CTK.CTkFont(size = 12,weight = "bold"),
-                                                    fg_color= "#209617",
-                                                    hover_color="#30CD4F",
+                                                    fg_color= "#184873",
+                                                    hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center"
                                                     
@@ -177,9 +179,9 @@ class Mode_irrigation:
             self.menu_button[button].grid(row = 0,column = i, padx =5,pady =5)
             i+=1
 
-        self.drip_title.place(relx = 0.04,rely =0.05)
-        self.drip_frame.place(relx = 0.07,rely =0.25)
-        self.drip_buttons["appliquer tout"].place(relx = 0.28,rely =0.8)
+        self.drip_title.pack(pady = 20)
+        self.drip_frame.pack(pady = 5)
+        self.drip_buttons["appliquer tout"].pack(pady = 5)
         self.drip_entries["distance_ligne"].grid(row = 0, column = 0,padx = 4,pady = 4)
         self.drip_entries["espace_goutteur"].grid(row = 1, column = 0,padx = 4,pady = 4)
         self.drip_entries["debit_eau"].grid(row = 2, column = 0,padx = 4,pady = 4)
@@ -188,8 +190,8 @@ class Mode_irrigation:
         self.drip_buttons["debit_eau"].grid(row = 2, column = 1,padx = 4,pady = 4)
 
 
-        self.aspersion_title.place(relx = 0.06,rely =0.05)
-        self.aspersion_frame.place(relx = 0.1,rely =0.2)
+        self.aspersion_title.pack(pady = 10)
+        self.aspersion_frame.pack(pady = 5)
         self.aspersion_entries["diam_gouteur"].grid(row = 0, column = 0,padx = 4,pady = 4)
         self.aspersion_entries["ecart_gouteur"].grid(row = 1, column = 0,padx = 4,pady = 4)
         self.aspersion_entries["distance_ligne"].grid(row = 2, column = 0,padx = 4,pady = 4)
@@ -198,7 +200,7 @@ class Mode_irrigation:
         self.aspersion_buttons["ecart_gouteur"].grid(row = 1, column = 1,padx = 4,pady = 4)
         self.aspersion_buttons["distance_ligne"].grid(row = 2, column = 1,padx = 4,pady = 4)
         self.aspersion_buttons["pression"].grid(row = 3, column = 1,padx = 4,pady = 4)
-        self.aspersion_buttons["appliquer tout"].place(relx = 0.28,rely =0.87)
+        self.aspersion_buttons["appliquer tout"].pack(pady =0)
         
 
 
