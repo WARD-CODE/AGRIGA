@@ -1,20 +1,26 @@
 
 import customtkinter as CTK
-from tkinter import messagebox
-from constants import constants
 from PIL import Image
+from tableframe import TableFrame
+
 
 class Supervision:
     def __init__(self,master,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.menu_button = {}
         self.supervision_frame = {}
+
         self.mesures_labels = {}
+
         self.actionneurs_frame = {}
         self.actionneurs_components = {}
         self.actionneurs_electrovanne_labels = {}
         self.actionneurs_pompe_labels = {}
+
         self.evapotranspiration_frame = {}
+
+        self.historique_frame = {}
+        self.histo_button = {}
         self.init_components(master)
         
         self.disp_components()
@@ -101,7 +107,8 @@ class Supervision:
                                                     anchor = "center"
                                                     )
         
-        #actionneurs
+        #actionneurs field
+        
         self.actionneurs_frame["scroller"] = CTK.CTkScrollableFrame(master = self.supervision_frame["tabview_1"].tab("Actionneurs"),
                                                 width = 410,
                                                 height = 330,
@@ -145,16 +152,70 @@ class Supervision:
                                                     command = lambda: self.actionneurs_creator(self.actionneurs_components["pompe"].get(),self.actionneurs_components["electrovanne"].get())
                                                     )
         
-        #evapotranspiration
+        #evapotranspiration field
         self.evapotranspiration_frame["scroller"] = CTK.CTkScrollableFrame(master = self.supervision_frame["tabview_1"].tab("Evapotranspiration"),
-                                        width = 410,
-                                        height = 330,
-                                        fg_color= "transparent",
-                                        corner_radius = 15)
-        
+                                                                            width = 410,
+                                                                            height = 330,
+                                                                            fg_color= "transparent",
+                                                                            orientation="horizontal",
+                                                                            corner_radius = 15)
         
 
         
+        #historique field
+        
+        
+        self.historique_components()
+        
+        
+
+    def historique_components(self):
+        histo_list = ["parametres atmospheriques", "caracteristiques de la culture","Evapotranspiration d'eau"]
+        self.historique_frame["frame"] = CTK.CTkFrame(master = self.supervision_frame["tabview_1"].tab("Historique"),
+                                                        width = 400,
+                                                        height = 200,
+                                                        fg_color= "transparent",
+                                                        corner_radius = 15)
+        
+        self.historique_frame["buttons_frame"] = CTK.CTkFrame(master = self.historique_frame["frame"] ,
+                                                        width = 200,
+                                                        height = 100,
+                                                        fg_color= "transparent",
+                                                        corner_radius = 15)
+        
+        self.historique_title=CTK.CTkLabel(master=self.supervision_frame["tabview_1"].tab("Historique"),
+                                           text="Historique des données",
+                                           font = CTK.CTkFont(size = 15,weight = "bold"))
+        
+        self.historique_image = CTK.CTkLabel(master = self.supervision_frame["tabview_1"].tab("Historique"),
+                                        text="",
+                                        width = 150,
+                                        height = 150,
+                                        fg_color= 'transparent',
+                                        image = CTK.CTkImage(Image.open("images/histo.png"),size = (150,150)),
+                                        corner_radius = 15,
+                                        anchor = "center"
+                                        )
+        i=1
+        for button in histo_list:
+            self.histo_button[button] = CTK.CTkButton(master = self.historique_frame["buttons_frame"],
+                                            text=button,
+                                            width = 120,
+                                            height = 40,
+                                            font = CTK.CTkFont(size = 12,weight = "bold"),
+                                            fg_color= "#184873",
+                                            hover_color="#295a87",
+                                            # image = CTK.CTkImage(Image.open("images/{}".format(button_icons[button])),size = (40,40)),
+                                            corner_radius = 15,
+                                            anchor = "center",
+                                            command = lambda b=i:self.push_histoList(b)
+                                            )
+            i+=1
+            
+
+
+
+
     def disp_components(self):
 
         #general frame
@@ -184,6 +245,16 @@ class Supervision:
             i+=1
         self.actionneurs_frame["actionneur"].pack()
 
+        #historique
+        self.historique_title.pack()
+        self.historique_frame["frame"].pack()
+        self.historique_frame["buttons_frame"].place(relx=.01,rely=.14)
+        self.historique_image.place(relx=.6, rely=.26)
+        self.histo_button["parametres atmospheriques"].grid(row=0,column=0,pady=7,sticky="nsew")
+        self.histo_button["caracteristiques de la culture"].grid(row=1,column=0,pady=7,sticky="nsew")
+        self.histo_button["Evapotranspiration d'eau"].grid(row=2,column=0, pady=7,sticky="nsew")
+        
+        
     
     def actionneurs_creator(self,pompe,electrovanne):
 
@@ -248,4 +319,14 @@ class Supervision:
 
     def push_historique(self):
         self.supervision_frame["tabview_1"].set("Historique")
+    
+    def push_histoList(self,b):
+        if b==1:
+            return TableFrame("paramtres atmospheriques.csv")
+        elif b==2:
+            return TableFrame("caracteristiques culture.csv")
+        elif b==3:
+            return TableFrame("evapotranspiration.csv")
+
+
 

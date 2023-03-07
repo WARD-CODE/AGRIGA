@@ -1,5 +1,4 @@
 import customtkinter as CTK
-from constants import constants 
 import string
 
 class VkeyBoard(CTK.CTkTabview):
@@ -39,7 +38,8 @@ class VkeyBoard(CTK.CTkTabview):
                                         height = 30,
                                         fg_color= "#209631",
                                         hover_color="#30CD4F",
-                                        corner_radius = 10)
+                                        corner_radius = 10,
+                                        command=lambda c=m:self.insert_caract(c))
             self.keys[k] = key
             key = {}
             d+=1
@@ -55,4 +55,5 @@ class VkeyBoard(CTK.CTkTabview):
                         self.keys[k][list(self.keys[k].keys())[i]].grid(row = x, column = y, padx = 1, pady=2)
                         i+=1
                            
-            
+    def insert_caract(self,c):
+        pass

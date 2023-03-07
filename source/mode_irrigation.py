@@ -1,8 +1,4 @@
-
-
 import customtkinter as CTK
-from tkinter import messagebox
-from constants import constants
 from PIL import Image
 from Conf import Irrigation
 

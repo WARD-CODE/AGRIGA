@@ -1,10 +1,10 @@
 import customtkinter as CTK
 from PIL import Image
-from tkinter import messagebox
 from constants import constants 
 from signIN import SignIN_W
 from vkeyboard import VkeyBoard
 from frame_screen import FrameScreen
+
 
 
 CTK.set_appearance_mode(constants.wind_mode)
@@ -113,7 +113,7 @@ class App(CTK.CTk):
         self.general_button["redemarer"].configure(command=self.push_redemarer)
 
     def push_accueil(self):
-        self.principal_frame["frame screen"].set("Acueil")
+        self.principal_frame["frame screen"].set("Accueil")
         
     
     def push_supervision(self):

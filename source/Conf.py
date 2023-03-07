@@ -1,5 +1,4 @@
-import paho.mqtt.client as mqtt
-from pyowm import OWM
+
 
 """owm = OWM('cf43685e65aea50b553f48125f7b25e9')
 mgr = owm.weather_manager()
