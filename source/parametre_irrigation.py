@@ -9,6 +9,7 @@ class parametre_irrigation:
 
     def __init__(self,master,*args,**kwargs):
         super().__init__(*args,**kwargs)
+        # define all objects used for the irrigation parameters
         self.menu_button = {}
         self.param_irrigation_frame = {}
         self.irrigation_entries = {}
@@ -17,12 +18,13 @@ class parametre_irrigation:
         self.culture_buttons = {}
         
 
-
+        #initialize components of the irrigation parameters
         self.init_components(master)
+        # display components to the screen
         self.disp_components()
 
     def irrigation_component(self):
-
+        
         entries_list = ["mode_irrigation", "frequence_irrigation", "heure_irrigation"]
         entries_text = ["mode d'irrigation", "frequence d'irrigation (n)","hh:mm"]
 

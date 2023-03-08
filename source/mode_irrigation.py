@@ -1,3 +1,5 @@
+from http.client import OK
+from tkinter import messagebox
 import customtkinter as CTK
 from PIL import Image
 from Conf import Irrigation
@@ -6,7 +8,8 @@ class Mode_irrigation:
 
     def __init__(self,master,*args,**kwargs):
         super().__init__(*args,**kwargs)
-        self.menu_button = {}
+        # define all objects used for the Drip mode
+        self.menu_button = {} 
         self.mode_irrigation_frame = {}
         self.drip_entries = {}
         self.drip_buttons = {}
@@ -14,32 +17,36 @@ class Mode_irrigation:
         self.aspersion_buttons = {}
         self.Mode_entry_GG = []
 
-
+        #initialize components of the irrigation mode
         self.init_components(master)
+        # display components to the screen
         self.disp_components()
 
     def drip_component(self):
-        #drip fields
+        
         entries_list = ["distance_ligne", "espace_goutteur", "debit_eau"]
         entries_text = ["distance entre les lignes(Cm)", "Espace entre les goutteurs (cm)","débit d'eau(L/heure)"]
 
+        #the drip frame where we add its compoenents
         self.drip_frame = CTK.CTkFrame(master = self.mode_irrigation_frame["tabview_1"].tab("drip"),
                                         width = 330,
                                         height = 330,
                                         fg_color= "transparent",
                                         corner_radius = 15)
-
+        # drip general title
         self.drip_title = CTK.CTkLabel(master = self.mode_irrigation_frame["tabview_1"].tab("drip"),
                                                     text="Table de configuration Mode Goutte à Goutte",
                                                     font = CTK.CTkFont(size = 18,weight = "bold"))
-
-        for indx in range(0,3):
-            
+        
+        # the drip confguration parametes entries (editfields) and application buttons
+        for indx in range(0,3):          
             self.drip_entries[entries_list[indx]] = CTK.CTkEntry(master = self.drip_frame,
                                                                 placeholder_text = entries_text[indx],
-                                                                font = CTK.CTkFont(size = 14),
-                                                                width = 220,
-                                                                height = 35)
+                                                                font = CTK.CTkFont(size =16),
+                                                                width = 250,
+                                                                height = 35,
+                                                                justify="center"
+                                                                )
             
             self.drip_buttons[entries_list[indx]] =  CTK.CTkButton(master = self.drip_frame,
                                                     text="",
@@ -50,9 +57,11 @@ class Mode_irrigation:
                                                     image=CTK.CTkImage(Image.open("images/appliquer.png"),size = (25,25)),
                                                     hover_color="#295a87",
                                                     corner_radius = 15,
-                                                    anchor = "center"
+                                                    anchor = "center",
+                                                    command = lambda s=indx:self.appliquer_mode_GG(s)
                                                     )
-            
+
+        # this button allow a general apply   
         self.drip_buttons["appliquer tout"] = CTK.CTkButton(master = self.mode_irrigation_frame["tabview_1"].tab("drip"),
                                                     text="appliquer tout",
                                                     width = 180,
@@ -61,14 +70,19 @@ class Mode_irrigation:
                                                     fg_color= "#184873",
                                                     hover_color="#295a87",
                                                     corner_radius = 15,
-                                                    anchor = "center"
-                                                    
+                                                    anchor = "center",
+                                                    command = lambda s=3:self.appliquer_mode_GG(s)
                                                     )
     
     def aspersion_components(self):
+        """
+        this section will define the components like the previous one 
+        and there are no differences.
         
+        """
         entries_list = ["diam_gouteur", "ecart_gouteur", "distance_ligne","pression"]
         entries_text = ["Diamètre du gouteur (mm)", "Ecart entre les asperseurs (cm)","Distance entre les lignes (cm)","Pression (bar)"]
+
 
         self.aspersion_frame = CTK.CTkFrame(master = self.mode_irrigation_frame["tabview_1"].tab("aspersion"),
                                         width = 340,
@@ -84,9 +98,11 @@ class Mode_irrigation:
             
             self.aspersion_entries[entries_list[indx]] = CTK.CTkEntry(master = self.aspersion_frame,
                                                                 placeholder_text = entries_text[indx],
-                                                                font = CTK.CTkFont(size = 14),
-                                                                width =210,
-                                                                height = 35)
+                                                                font = CTK.CTkFont(size = 16),
+                                                                width =250,
+                                                                height = 35,
+                                                                justify="center"
+                                                                )
             
             self.aspersion_buttons[entries_list[indx]] =  CTK.CTkButton(master = self.aspersion_frame,
                                                     text="",
@@ -97,7 +113,8 @@ class Mode_irrigation:
                                                     fg_color= "#184873",
                                                     hover_color="#295a87",
                                                     corner_radius = 15,
-                                                    anchor = "center"
+                                                    anchor = "center",
+                                                    command = lambda s=indx:self.appliquer_mode_ASP(s)
                                                     )
             
         self.aspersion_buttons["appliquer tout"] = CTK.CTkButton(master = self.mode_irrigation_frame["tabview_1"].tab("aspersion"),
@@ -108,22 +125,28 @@ class Mode_irrigation:
                                                     fg_color= "#184873",
                                                     hover_color="#295a87",
                                                     corner_radius = 15,
-                                                    anchor = "center"
+                                                    anchor = "center",
+                                                    command = lambda s=4:self.appliquer_mode_ASP(4)
                                                     
                                                     )
     def init_components(self,master):
+        """
+        in this section we are creating the main frame of the irrigation mode 
+        including the drip and aspersion modes sections
 
+        """
         button_list = ["drip","aspersion"]
         button_text = ["goutte à goutte",'aspersion']
         button_icons = ["drip.png","aspersion.png"]
 
+        # the green control buttons frame
         self.mode_irrigation_frame["buttons_frame"] = CTK.CTkFrame(master = master,
                                                                 width = 270,
                                                                 height = 110,
                                                                 fg_color= "transparent",
                                                                 corner_radius = 15
                                                                 )
-        
+        # the main Table to switch between modes
         self.mode_irrigation_frame["tabview_1"] = CTK.CTkTabview(master = master,
                                                                 width = 460,
                                                                 height = 330,
@@ -137,7 +160,7 @@ class Mode_irrigation:
                                                                 corner_radius = 15,
                                                                 state= "disabled"
                                                                 )
-
+        #two buttons represent the drip and aspersion modes
         for button in range(0,2):
             self.menu_button[button_list[button]] = CTK.CTkButton(master = self.mode_irrigation_frame["buttons_frame"],
                                                     text=button_text[button],
@@ -151,21 +174,28 @@ class Mode_irrigation:
                                                     corner_radius = 15,
                                                     anchor = "center"
                                                     )
-            
+        # attachement of the buttons to the callbacks    
         self.menu_button["drip"].configure(command =  self.push_drip)
         self.menu_button["aspersion"].configure(command =  self.push_aspersion)
 
+        # link the main table with buttons
         for button in button_list:
             self.mode_irrigation_frame["tabview_1"].add(button)
         else:
             self.mode_irrigation_frame["tabview_1"].add("     ")
 
+        #adding the sections components to the main frame
         self.drip_component()
         self.aspersion_components()
 
 
 
     def disp_components(self):
+        """
+        in this section we are displaying all components 
+        created before to the irrigation mode view
+        
+        """
         self.mode_irrigation_frame["buttons_frame"].place(relx = 0, rely = 0.8)
         self.mode_irrigation_frame["tabview_1"].place(relx = 0.005,rely = 0.002)
 
@@ -199,15 +229,81 @@ class Mode_irrigation:
         self.aspersion_buttons["appliquer tout"].pack(pady =0)
         
 
-
+    # this callback to switch to the drip mode config
     def push_drip(self):
         self.mode_irrigation_frame["tabview_1"].set("drip")
-
+    # this callback to switch to the aspersion mode config
     def push_aspersion(self):
         self.mode_irrigation_frame["tabview_1"].set("aspersion")
 
-    def appliquer_mode_GG1(self):
-        for key in Irrigation.Mode_data_GG.keys():
-           Irrigation.Mode_data_GG[key] = int(self.drip_entries[key].get())
+    """ 
+    this callback to apply configuration to each field and to save 
+    the data in the Irrigation.Mode_data_GG dictionary 
+
+    """
+    def appliquer_mode_GG(self, stat):
+        if stat == 0:
+            if str(self.drip_entries["distance_ligne"].get()).isdigit():
+                Irrigation.Mode_data_GG["distance_ligne"] = int(self.drip_entries["distance_ligne"].get())
+            else:
+                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
+
+        elif stat == 1:
+            if str(self.drip_entries["espace_goutteur"].get()).isdigit():
+                Irrigation.Mode_data_GG["espace_goutteur"] = int(self.drip_entries["espace_goutteur"].get())
+            else:
+                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
+
+        elif stat == 2:
+            if str(self.drip_entries["debit_eau"].get()).isdigit():
+                Irrigation.Mode_data_GG["debit_eau"] = int(self.drip_entries["debit_eau"].get())
+            else:
+                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
+
+        elif stat == 3:
+            if str(self.drip_entries["distance_ligne"].get()).isdigit() and str(self.drip_entries["espace_goutteur"].get()).isdigit() and str(self.drip_entries["debit_eau"].get()).isdigit() :
+                Irrigation.Mode_data_GG["distance_ligne"] = int(self.drip_entries["distance_ligne"].get())
+                Irrigation.Mode_data_GG["espace_goutteur"] = int(self.drip_entries["espace_goutteur"].get())
+                Irrigation.Mode_data_GG["debit_eau"] = int(self.drip_entries["debit_eau"].get())
+            else:
+                messagebox.showwarning("valeur incorrecte","assurer que les valeurs entrées sont correctes")
+
+    """ 
+    this callback to apply configuration to each field and to save 
+    the data in the Irrigation.Mode_data_ASP dictionary 
+    """
+
+    def appliquer_mode_ASP(self, stat):
+        if stat == 0:
+            if str(self.aspersion_entries["diam_gouteur"].get()).isdigit():
+                Irrigation.Mode_data_ASP["diam_gouteur"] = float(self.aspersion_entries["diam_gouteur"].get())
+            else:
+                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
+        elif stat == 1:
+            if str(self.aspersion_entries["ecart_gouteur"].get()).isdigit():
+                Irrigation.Mode_data_GG["ecart_gouteur"] = float(self.aspersion_entries["ecart_gouteur"].get())
+            else:
+                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
+        elif stat == 2:
+            if str(self.aspersion_entries["distance_ligne"].get()).isdigit():
+                Irrigation.Mode_data_GG["distance_ligne"] = float(self.aspersion_entries["distance_ligne"].get())
+            else:
+                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
+        elif stat == 3:
+            if str(self.aspersion_entries["pression"].get()).isdigit():
+                Irrigation.Mode_data_GG["pression"] = float(self.aspersion_entries["pression"].get())
+            else:
+                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
+        elif stat == 4:
+            if str(self.aspersion_entries["diam_gouteur"].get()).isdigit() and str(self.aspersion_entries["ecart_gouteur"].get()).isdigit() and str(self.aspersion_entries["distance_ligne"].get()).isdigit() and str(self.aspersion_entries["pression"].get()).isdigit():
+
+                Irrigation.Mode_data_ASP["diam_gouteur"] = float(self.aspersion_entries["diam_gouteur"].get())
+                Irrigation.Mode_data_GG["ecart_gouteur"] = float(self.aspersion_entries["ecart_gouteur"].get())
+                Irrigation.Mode_data_GG["distance_ligne"] = float(self.aspersion_entries["distance_ligne"].get())
+                Irrigation.Mode_data_GG["pression"] = float(self.aspersion_entries["pression"].get())
+            else:
+                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
+
+
+
         
-        print(Irrigation.Mode_data_GG)
