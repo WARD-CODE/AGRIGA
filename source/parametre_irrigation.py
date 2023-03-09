@@ -45,13 +45,13 @@ class parametre_irrigation:
                                                             height=30,
                                                             corner_radius=13,
                                                             values=["goutte à goutte", "aspersion"],   
-                                                            font = CTK.CTkFont(size = 14)
+                                                            font = CTK.CTkFont(size = 17)
 
                                                            )
         
         self.irrigation_entries["frequence_irrigation"] = CTK.CTkEntry(master = self.irrigation_frame,
                                                                 placeholder_text = entries_text[1],
-                                                                font = CTK.CTkFont(size = 14),
+                                                                font = CTK.CTkFont(size = 15),
                                                                 width = 190,
                                                                 height = 35)
         
@@ -69,7 +69,7 @@ class parametre_irrigation:
         
         self.irrigation_entries["heure_irrigation"] = CTK.CTkEntry(master = self.irrigation_frame,
                                                                 placeholder_text = entries_text[2],
-                                                                font = CTK.CTkFont(size = 14),
+                                                                font = CTK.CTkFont(size = 17),
                                                                 width = 140,
                                                                 height = 35)
         for i in range(3):
@@ -113,7 +113,7 @@ class parametre_irrigation:
             
         self.culture_entries["surface"] = CTK.CTkEntry(master = self.culture_frame,
                                                         placeholder_text = "surface",
-                                                        font = CTK.CTkFont(size = 14),
+                                                        font = CTK.CTkFont(size = 17),
                                                         width =170,
                                                         height = 35)
         
@@ -141,13 +141,13 @@ class parametre_irrigation:
                                                           )
         self.culture_entries["Kc_saison"] = CTK.CTkEntry(master = self.culture_frame,
                                                         placeholder_text = "(jj/mm/aaaa)",
-                                                        font = CTK.CTkFont(size = 14),
+                                                        font = CTK.CTkFont(size = 17),
                                                         width =120,
                                                         height = 35)
 
         self.culture_entries["Kc_value"] = CTK.CTkEntry(master = self.culture_frame,
                                                 placeholder_text = "valeur Kc",
-                                                font = CTK.CTkFont(size = 14),
+                                                font = CTK.CTkFont(size = 17),
                                                 width =160,
                                                 height = 35
                                                 )
@@ -273,7 +273,7 @@ class parametre_irrigation:
     def push_culture(self):
         self.param_irrigation_frame["tabview_1"].set("culture")
 
-    def appliquer_mode_GG1(self):
+    def appliquer_(self):
         for key in Irrigation.Mode_data_GG.keys():
            Irrigation.Mode_data_GG[key] = int(self.irrigation_entries[key].get())
         

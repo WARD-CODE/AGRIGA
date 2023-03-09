@@ -24,7 +24,7 @@ class Mode_irrigation:
 
     def drip_component(self):
         
-        entries_list = ["distance_ligne", "espace_goutteur", "debit_eau"]
+        entries_list = ["distance_ligne", "espace_gouteur", "debit_eau"]
         entries_text = ["distance entre les lignes(Cm)", "Espace entre les goutteurs (cm)","débit d'eau(L/heure)"]
 
         #the drip frame where we add its compoenents
@@ -58,7 +58,7 @@ class Mode_irrigation:
                                                     hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center",
-                                                    command = lambda s=indx:self.appliquer_mode_GG(s)
+                                                    command = lambda s=entries_list[indx]:self.appliquer_mode_GG(s)
                                                     )
 
         # this button allow a general apply   
@@ -71,7 +71,7 @@ class Mode_irrigation:
                                                     hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center",
-                                                    command = lambda s=3:self.appliquer_mode_GG(s)
+                                                    command = lambda:self.appliquer_mode_GG(all=True)
                                                     )
     
     def aspersion_components(self):
@@ -114,7 +114,7 @@ class Mode_irrigation:
                                                     hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center",
-                                                    command = lambda s=indx:self.appliquer_mode_ASP(s)
+                                                    command = lambda s=entries_list[indx]:self.appliquer_mode_ASP(s)
                                                     )
             
         self.aspersion_buttons["appliquer tout"] = CTK.CTkButton(master = self.mode_irrigation_frame["tabview_1"].tab("aspersion"),
@@ -126,7 +126,7 @@ class Mode_irrigation:
                                                     hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center",
-                                                    command = lambda s=4:self.appliquer_mode_ASP(4)
+                                                    command =lambda: self.appliquer_mode_ASP(all=True)
                                                     
                                                     )
     def init_components(self,master):
@@ -209,10 +209,10 @@ class Mode_irrigation:
         self.drip_frame.pack(pady = 5)
         self.drip_buttons["appliquer tout"].pack(pady = 5)
         self.drip_entries["distance_ligne"].grid(row = 0, column = 0,padx = 4,pady = 4)
-        self.drip_entries["espace_goutteur"].grid(row = 1, column = 0,padx = 4,pady = 4)
+        self.drip_entries["espace_gouteur"].grid(row = 1, column = 0,padx = 4,pady = 4)
         self.drip_entries["debit_eau"].grid(row = 2, column = 0,padx = 4,pady = 4)
         self.drip_buttons["distance_ligne"].grid(row = 0, column = 1,padx = 4,pady = 4)
-        self.drip_buttons["espace_goutteur"].grid(row = 1, column = 1,padx = 4,pady = 4)
+        self.drip_buttons["espace_gouteur"].grid(row = 1, column = 1,padx = 4,pady = 4)
         self.drip_buttons["debit_eau"].grid(row = 2, column = 1,padx = 4,pady = 4)
 
 
@@ -241,68 +241,43 @@ class Mode_irrigation:
     the data in the Irrigation.Mode_data_GG dictionary 
 
     """
-    def appliquer_mode_GG(self, stat):
-        if stat == 0:
-            if str(self.drip_entries["distance_ligne"].get()).isdigit():
-                Irrigation.Mode_data_GG["distance_ligne"] = int(self.drip_entries["distance_ligne"].get())
+    def appliquer_mode_GG(self, field_name="", all=False):
+        if not all:
+            if str(self.drip_entries[field_name].get()).isdigit():
+                Irrigation.Mode_data_GG[field_name] = int(self.drip_entries[field_name].get())
             else:
                 messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
 
-        elif stat == 1:
-            if str(self.drip_entries["espace_goutteur"].get()).isdigit():
-                Irrigation.Mode_data_GG["espace_goutteur"] = int(self.drip_entries["espace_goutteur"].get())
-            else:
-                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
-
-        elif stat == 2:
-            if str(self.drip_entries["debit_eau"].get()).isdigit():
-                Irrigation.Mode_data_GG["debit_eau"] = int(self.drip_entries["debit_eau"].get())
-            else:
-                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
-
-        elif stat == 3:
-            if str(self.drip_entries["distance_ligne"].get()).isdigit() and str(self.drip_entries["espace_goutteur"].get()).isdigit() and str(self.drip_entries["debit_eau"].get()).isdigit() :
-                Irrigation.Mode_data_GG["distance_ligne"] = int(self.drip_entries["distance_ligne"].get())
-                Irrigation.Mode_data_GG["espace_goutteur"] = int(self.drip_entries["espace_goutteur"].get())
-                Irrigation.Mode_data_GG["debit_eau"] = int(self.drip_entries["debit_eau"].get())
-            else:
-                messagebox.showwarning("valeur incorrecte","assurer que les valeurs entrées sont correctes")
-
+        elif all:
+            list_data = ["distance_ligne","espace_gouteur","debit_eau"]
+            
+            for data in list_data:
+                if str(self.drip_entries[data].get()).isdigit():
+                    Irrigation.Mode_data_GG[data] = float(self.drip_entries[data].get())
+                else:
+                    messagebox.showwarning("valeur incorrecte","assurer que les valeurs entrées sont correctes")
+                    break
     """ 
     this callback to apply configuration to each field and to save 
     the data in the Irrigation.Mode_data_ASP dictionary 
     """
 
-    def appliquer_mode_ASP(self, stat):
-        if stat == 0:
-            if str(self.aspersion_entries["diam_gouteur"].get()).isdigit():
-                Irrigation.Mode_data_ASP["diam_gouteur"] = float(self.aspersion_entries["diam_gouteur"].get())
+    def appliquer_mode_ASP(self, field_name="", all=False):
+        if not all:
+            if str(self.aspersion_entries[field_name].get()).isdigit():
+                Irrigation.Mode_data_ASP[field_name] = float(self.aspersion_entries[field_name].get())
             else:
                 messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
-        elif stat == 1:
-            if str(self.aspersion_entries["ecart_gouteur"].get()).isdigit():
-                Irrigation.Mode_data_GG["ecart_gouteur"] = float(self.aspersion_entries["ecart_gouteur"].get())
-            else:
-                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
-        elif stat == 2:
-            if str(self.aspersion_entries["distance_ligne"].get()).isdigit():
-                Irrigation.Mode_data_GG["distance_ligne"] = float(self.aspersion_entries["distance_ligne"].get())
-            else:
-                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
-        elif stat == 3:
-            if str(self.aspersion_entries["pression"].get()).isdigit():
-                Irrigation.Mode_data_GG["pression"] = float(self.aspersion_entries["pression"].get())
-            else:
-                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
-        elif stat == 4:
-            if str(self.aspersion_entries["diam_gouteur"].get()).isdigit() and str(self.aspersion_entries["ecart_gouteur"].get()).isdigit() and str(self.aspersion_entries["distance_ligne"].get()).isdigit() and str(self.aspersion_entries["pression"].get()).isdigit():
 
-                Irrigation.Mode_data_ASP["diam_gouteur"] = float(self.aspersion_entries["diam_gouteur"].get())
-                Irrigation.Mode_data_GG["ecart_gouteur"] = float(self.aspersion_entries["ecart_gouteur"].get())
-                Irrigation.Mode_data_GG["distance_ligne"] = float(self.aspersion_entries["distance_ligne"].get())
-                Irrigation.Mode_data_GG["pression"] = float(self.aspersion_entries["pression"].get())
-            else:
-                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
+        elif all:
+            list_data = ["diam_gouteur","ecart_gouteur","distance_ligne","pression"]
+            
+            for data in list_data:
+                if str(self.aspersion_entries[data].get()).isdigit():
+                    Irrigation.Mode_data_ASP[data] = float(self.aspersion_entries[data].get())
+                else:
+                    messagebox.showwarning("valeur incorrecte","assurer que les valeurs entrées sont correctes")
+                    break
 
 
 
