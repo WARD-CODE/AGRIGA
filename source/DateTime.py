@@ -3,33 +3,39 @@ from tktimepicker import AnalogPicker #à installer
 import customtkinter as CTK
 from PIL import Image
 
-
 class Vcalender(CTK.CTkToplevel):
-    def __init__(self):
+    def __init__(self,field):
         super().__init__()
         self.title("Calendrier")
         self.init_component()
         self.disp_component()
-        
+        self.field = field
     def init_component(self):
         self.calend = Calendar(master = self, key ="day", year =2023, month=3,day=1)
         self.button = CTK.CTkButton(master=self,
                                     text="",
-                                    image = CTK.CTkImage(Image.open("images/appliquer.png"),size = (25,25))
+                                    image = CTK.CTkImage(Image.open("images/appliquer.png"),size = (25,25)),
+                                    command=self.send_date
                                     )
         
     def disp_component(self):
         self.calend.pack(pady=4)
         self.button.pack(pady=3)
+    
+    def send_date(self):
+        date_t = self.calend.get_date()
+        self.field.insert(0,"{}".format(date_t))
+        del self.field
+        self.destroy()
 
 class Vclock(CTK.CTkToplevel):
-    def __init__(self):
+    def __init__(self, field):
         super().__init__()
         
         self.title("Clock")
         self.init_component()
         self.disp_component()
-        
+        self.field = field
         
     def init_component(self):
         self.clock = AnalogPicker(self, per_orient='vertical')
@@ -47,9 +53,16 @@ class Vclock(CTK.CTkToplevel):
         
         self.button = CTK.CTkButton(master=self,
                                     text="",
-                                    image = CTK.CTkImage(Image.open("images/appliquer.png"),size = (25,25))
+                                    image = CTK.CTkImage(Image.open("images/appliquer.png"),size = (25,25)),
+                                    command=self.send_time
                                     )
         
     def disp_component(self):
         self.clock.pack(pady=4)
         self.button.pack(pady=3)
+    
+    def send_time(self):
+        time_t = self.clock.time() 
+        self.field.insert(0,"{}:{}-{}".format(time_t[0],time_t[1],time_t[2]))
+        del self.field
+        self.destroy()

@@ -246,7 +246,7 @@ class Mode_irrigation:
             if str(self.drip_entries[field_name].get()).isdigit():
                 Irrigation.Mode_data_GG[field_name] = int(self.drip_entries[field_name].get())
             else:
-                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
+                messagebox.showwarning("valeur incorrecte","verifier le champ")
 
         elif all:
             list_data = ["distance_ligne","espace_gouteur","debit_eau"]
@@ -267,7 +267,7 @@ class Mode_irrigation:
             if str(self.aspersion_entries[field_name].get()).isdigit():
                 Irrigation.Mode_data_ASP[field_name] = float(self.aspersion_entries[field_name].get())
             else:
-                messagebox.showwarning("valeur incorrecte","entrer une valeur entiere")
+                messagebox.showwarning("valeur incorrecte","verifier le champ")
 
         elif all:
             list_data = ["diam_gouteur","ecart_gouteur","distance_ligne","pression"]

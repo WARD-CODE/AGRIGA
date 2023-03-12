@@ -33,7 +33,7 @@ class Irrigation:
 
     param_data_CUL = {
             "surface":0.0,
-            "culture":{'type':'','element':''},
+            "culture":{'culture':'','element':''},
             "Kc":0.0}
 
     electrovanne_stat = ["desactive"]
