@@ -1,10 +1,11 @@
+from tkinter import Tk
 import customtkinter as CTK
 from PIL import Image
 from constants import constants 
 from signIN import SignIN_W
 from vkeyboard import VkeyBoard
 from frame_screen import FrameScreen
-
+from about import About
 
 
 CTK.set_appearance_mode(constants.wind_mode)
@@ -78,6 +79,10 @@ class App(CTK.CTk):
                                     text = "",
                                     image = CTK.CTkImage(Image.open("images/safitech.png"),size = (70,55)),
                                     )
+        self.safitech_logo.bind("<Enter>",self.logo_enter)
+        self.safitech_logo.bind("<Leave>",self.logo_leave)
+        self.safitech_logo.bind("<Button-1>",self.get_about)
+        
         for button in range(0,4):
             self.menu_button[button_list[button]] = CTK.CTkButton(master = self.principal_frame["menu"],
                                                     text=button_text[button],
@@ -130,11 +135,18 @@ class App(CTK.CTk):
 
     def push_redemarer(self):
         self.destroy()
+    
+    def logo_enter(self,event):
+        self.safitech_logo.configure(image = CTK.CTkImage(Image.open("images/safitech.png"),size = (80,65)))
+    def logo_leave(self,event):
+        self.safitech_logo.configure(image = CTK.CTkImage(Image.open("images/safitech.png"),size = (70,55)))
+    def get_about(self,event):
+        return About()
 
     def disp_components(self):
         self.principal_frame["safitech"].place(relx= 0,rely = 0)
-        self.safitech_title.place(relx = 0.32, rely = 0.21)
-        self.safitech_slogon.place(relx = 0.32, rely = 0.436)
+        self.safitech_title.place(relx = 0.35, rely = 0.21)
+        self.safitech_slogon.place(relx = 0.35, rely = 0.436)
         self.safitech_logo.place(relx = 0.06, rely = 0.12)
 
         self.principal_frame["menu"].place(relx= 0.014,rely = 0.2)
@@ -156,6 +168,7 @@ class App(CTK.CTk):
     def window_configuration(self):
         self.title(constants.wind_title)
         self.geometry("{}x{}".format(constants.wind_dim[0],constants.wind_dim[1] ))
+        self.iconbitmap("images/safitech.ico")
         self.resizable(False,False)
 
 if __name__ == "__main__":

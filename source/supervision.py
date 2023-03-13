@@ -90,7 +90,7 @@ class Supervision:
                                                         corner_radius = 15)
 
         self.misures_title = CTK.CTkLabel(master = self.supervision_frame["tabview_1"].tab("Mesures"),
-                                                    text="Supervision et prévision métheologique",
+                                                    text="Supervision et prévision méteologique",
                                                     font = CTK.CTkFont(size = 20,weight = "bold"))
 
         for label in range(0,5):
@@ -106,7 +106,8 @@ class Supervision:
                                                     corner_radius = 15,
                                                     anchor = "center"
                                                     )
-        
+            
+            
         #actionneurs field
         
         self.actionneurs_frame["scroller"] = CTK.CTkScrollableFrame(master = self.supervision_frame["tabview_1"].tab("Actionneurs"),

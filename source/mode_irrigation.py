@@ -3,7 +3,7 @@ from tkinter import messagebox
 import customtkinter as CTK
 from PIL import Image
 from Conf import Irrigation
-
+import re
 class Mode_irrigation:
 
     def __init__(self,master,*args,**kwargs):
@@ -242,17 +242,18 @@ class Mode_irrigation:
 
     """
     def appliquer_mode_GG(self, field_name="", all=False):
+        re_f = r'^\d{1,2}.\d{1,2}$'
         if not all:
-            if str(self.drip_entries[field_name].get()).isdigit():
-                Irrigation.Mode_data_GG[field_name] = int(self.drip_entries[field_name].get())
+            if re.match(re_f,str(self.drip_entries[field_name].get())):
+                Irrigation.Mode_data_GG[field_name] = float(self.drip_entries[field_name].get())
             else:
-                messagebox.showwarning("valeur incorrecte","verifier le champ")
+                messagebox.showwarning("valeur incorrecte","la valeur du champ doit etre sous la forme nn.ff")
 
         elif all:
             list_data = ["distance_ligne","espace_gouteur","debit_eau"]
             
             for data in list_data:
-                if str(self.drip_entries[data].get()).isdigit():
+                if re.match(re_f,str(self.drip_entries[data].get())):
                     Irrigation.Mode_data_GG[data] = float(self.drip_entries[data].get())
                 else:
                     messagebox.showwarning("valeur incorrecte","assurer que les valeurs entrées sont correctes")
@@ -263,17 +264,19 @@ class Mode_irrigation:
     """
 
     def appliquer_mode_ASP(self, field_name="", all=False):
+        re_f = r'^\d{1,2}.\d{1,2}$'
+
         if not all:
-            if str(self.aspersion_entries[field_name].get()).isdigit():
+            if re.match(re_f,str(self.aspersion_entries[field_name].get())):
                 Irrigation.Mode_data_ASP[field_name] = float(self.aspersion_entries[field_name].get())
             else:
-                messagebox.showwarning("valeur incorrecte","verifier le champ")
+                messagebox.showwarning("valeur incorrecte","la valeur du champ doit etre sous la forme nn.ff")
 
         elif all:
             list_data = ["diam_gouteur","ecart_gouteur","distance_ligne","pression"]
             
             for data in list_data:
-                if str(self.aspersion_entries[data].get()).isdigit():
+                if re.match(re_f,str(self.aspersion_entries[data].get())):
                     Irrigation.Mode_data_ASP[data] = float(self.aspersion_entries[data].get())
                 else:
                     messagebox.showwarning("valeur incorrecte","assurer que les valeurs entrées sont correctes")

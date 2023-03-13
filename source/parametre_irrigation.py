@@ -1,4 +1,6 @@
 
+from os import stat
+from sre_parse import State
 import customtkinter as CTK
 from PIL import Image
 from tkinter import Variable, messagebox
@@ -145,14 +147,22 @@ class parametre_irrigation:
                                                         placeholder_text = "(jj/mm/aaaa)",
                                                         font = CTK.CTkFont(size = 17),
                                                         width =120,
-                                                        height = 35)
+                                                        height = 35,
+                                                        state=CTK.DISABLED)
 
         self.culture_entries["Kc"] = CTK.CTkEntry(master = self.culture_frame,
-                                                placeholder_text = "valeur Kc",
+                                                placeholder_text = "Kc",
                                                 font = CTK.CTkFont(size = 17),
-                                                width =160,
+                                                width =80,
                                                 height = 35
                                                 )
+        
+        self.culture_entries["auto"] = CTK.CTkCheckBox(master = self.culture_frame,
+                                                         text="auto",
+                                                         width=20,
+                                                         command=self.auto_kc
+
+                                                         )
         
         for button in buttons_list:
             self.culture_buttons[button] =  CTK.CTkButton(master = self.culture_frame,
@@ -261,9 +271,11 @@ class parametre_irrigation:
         self.culture_entries["surface"].grid(row = 0, column = 0,padx = 4,pady = 4)
         self.culture_entries["culture"].grid(row = 1, column = 0,padx = 4,pady = 4)
         self.culture_entries["element"].grid(row = 1, column = 1,padx = 4,pady = 4)
-        self.culture_buttons["Kc_saison"].place(relx = 0.01,rely =0.7)
+        self.culture_buttons["Kc_saison"].place(relx = 0.01,rely =0.7)#calendar
         self.culture_entries["Kc_saison"].place(relx = 0.115,rely =0.69)
-        self.culture_entries["Kc"].grid(row = 2, column = 1,padx = 4,pady = 4)
+        self.culture_entries["Kc"].place(relx = 0.44,rely =0.69)
+        self.culture_entries["auto"].place(relx = 0.68,rely =0.73)
+
         self.culture_buttons["surface"].grid(row = 0, column = 2,padx = 4,pady = 4)
         self.culture_buttons["culture"].grid(row = 1, column = 2,padx = 4,pady = 4)
         self.culture_buttons["Kc"].grid(row = 2, column = 2,padx = 4,pady = 4)
@@ -281,6 +293,14 @@ class parametre_irrigation:
     
     def push_hour(self):
         return Vclock(self.irrigation_entries["heure"])
+    
+    def auto_kc(self):
+        if int(self.culture_entries["auto"].get()) == 1:
+            self.culture_entries["Kc"].configure(state=CTK.DISABLED)
+            self.culture_entries["Kc_saison"].configure(state=CTK.NORMAL)
+        else:
+            self.culture_entries["Kc"].configure(state=CTK.NORMAL)
+            self.culture_entries["Kc_saison"].configure(state=CTK.DISABLED)
 
     def appliquer_param_IRG(self, field_name='', all=False):
         re_hour= r'^\d{1,2}:\d{2}-([AP]M)$'
@@ -311,7 +331,7 @@ class parametre_irrigation:
                     Irrigation.param_data_IRG["heure"] = str(self.irrigation_entries["heure"].get())
                     checker+=1
                 if checker == 3:
-                    messagebox.showinfo("validation", "données enregistrés et validé!")
+                    messagebox.showinfo("validation", "données enregistrés et validés!")
                 else:
                     messagebox.showwarning("valeurs incorrectes","assurer que les valeurs des entrées sont correctes")
     
@@ -319,7 +339,8 @@ class parametre_irrigation:
     def appliquer_param_CUL(self, field_name="", all=False):
         
         re_date = r'^\d{2}/\d{2}/\d{4}$'
-        re_surf = r'^\d{2}.\d{2-5}$'
+        re_surf = r'^\d{2}.\d{1,3}$'
+        re_kc = r'^0(\.\d+)?|1(\.0+)?$'
 
         if not all:
             if field_name == "culture":
@@ -332,13 +353,19 @@ class parametre_irrigation:
                 else:
                     messagebox.showwarning("valeur incorrecte","la valeur du champ doit etre réelle (nn.ff)")
 
-            elif field_name == "Kc":       
-                if re.match(re_date,str(self.irrigation_entries["Kc_saison"].get())):
-                    self.auto_Kc(self.irrigation_entries["Kc_saison"].get())
-                    Irrigation.param_data_CUL[field_name] = str(self.irrigation_entries[field_name].get())
+            elif field_name == "Kc":
+                if int(self.culture_entries["auto"].get()) == 1:       
+                    if re.match(re_date,str(self.culture_entries["Kc_saison"].get())):
+                        self.culture_entries["Kc"].configure(text=self.get_Kc(self.culture_entries["Kc_saison"].get()))
+                        Irrigation.param_data_CUL[field_name] = str(self.culture_entries[field_name].get())
+                    else:
+                        messagebox.showwarning("valeur incorrecte","la valeur du champ doit etre sous la forme dd/mm/aaaa")
                 else:
-                    messagebox.showwarning("valeur incorrecte","la valeur du champ doit etre sous la forme dd/mm/aaaa")
-
+                    if re.match(re_kc,str(self.culture_entries["Kc"].get())):
+                        Irrigation.param_data_CUL[field_name] = str(self.culture_entries[field_name].get())
+                    else:
+                        messagebox.showwarning("valeur incorrecte","la valeur du champ doit etre compris entre 0.0->1.0")
+                        
         elif all:
                 checker = 1 # to check if all field are valid
                 Irrigation.param_data_CUL["culture"]["culture"] = str(self.culture_entries["culture"].get())
@@ -347,9 +374,19 @@ class parametre_irrigation:
                 if re.match(re_surf,str(self.culture_entries["surface"].get())):
                     Irrigation.param_data_CUL["surface"] = float(self.culture_entries["surface"].get())
                     checker+=1
+
+                if int(self.culture_entries["auto"].get()) == 1:       
+                    if re.match(re_date,str(self.culture_entries["Kc_saison"].get())):
+                        self.culture_entries["Kc"].configure(text=self.get_Kc(self.culture_entries["Kc_saison"].get()))
+                        Irrigation.param_data_CUL[field_name] = str(self.culture_entries[field_name].get())
+                        checker+=1
+                else:
+                    if re.match(re_kc,str(self.culture_entries["Kc"].get())):
+                        Irrigation.param_data_CUL["Kc"] = str(self.culture_entries["Kc"].get())
+                        checker+=1
                 
                 if checker == 3:
-                    messagebox.showwarning("validation", "données enregistrés et validé!")
+                    messagebox.showinfo("validation", "données enregistrés et validés!")
                 else:
                     messagebox.showwarning("valeurs incorrectes","assurer que les valeurs des entrées sont correctes")
     
