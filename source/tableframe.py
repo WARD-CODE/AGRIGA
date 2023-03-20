@@ -6,6 +6,7 @@ from tkintertable import TableCanvas
 class TableFrame(CTK.CTkToplevel):
     def __init__(self,CSV_file = "Historique.csv"):
         super().__init__()
+        self.wm_title("Historique")
         self.Table = None
         self.init_components(CSV_file)
         self.disp_components()

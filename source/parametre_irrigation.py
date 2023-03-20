@@ -4,7 +4,7 @@ from sre_parse import State
 import customtkinter as CTK
 from PIL import Image
 from tkinter import Variable, messagebox
-from Conf import Irrigation
+from data_exchange import Irrigation
 from DateTime import Vcalender
 from DateTime import Vclock
 import re

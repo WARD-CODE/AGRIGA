@@ -2,7 +2,7 @@ from http.client import OK
 from tkinter import messagebox
 import customtkinter as CTK
 from PIL import Image
-from Conf import Irrigation
+from data_exchange import Irrigation
 import re
 class Mode_irrigation:
 

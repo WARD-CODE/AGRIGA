@@ -32,7 +32,7 @@ class Vclock(CTK.CTkToplevel):
     def __init__(self, field):
         super().__init__()
         
-        self.title("Clock")
+        self.title("Horloge")
         self.init_component()
         self.disp_component()
         self.field = field
