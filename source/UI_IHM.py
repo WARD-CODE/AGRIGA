@@ -54,7 +54,7 @@ class App(CTK.CTk):
         
         self.principal_frame["keyboard"] = VkeyBoard(self)
 
-        self.principal_frame["frame screen"] = FrameScreen(self)
+        self.principal_frame["frame screen"] = FrameScreen(self,self.principal_frame["keyboard"])
 
         self.principal_frame["menu_general"] = CTK.CTkFrame(master = self,
                                                             width = 270,
@@ -125,7 +125,7 @@ class App(CTK.CTk):
         self.principal_frame["frame screen"].set("Supervision")
     
     def push_modes(self):
-        self.principal_frame["frame screen"].set("Mode Irrigation")
+        self.principal_frame["frame screen"].set("Modes Irrigation")
     
     def push_parametres(self):
         self.principal_frame["frame screen"].set("Parametres Irrigation")

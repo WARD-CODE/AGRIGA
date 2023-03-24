@@ -8,10 +8,13 @@ class VkeyBoard(CTK.CTkTabview):
                         height = 200,
                         fg_color= "#424949",
                         corner_radius = 15)
+        
         self.keys = {}
         self.list_caracters = {}
-        self.init_components()
+        self.stackEntries = []
 
+        self.init_components()
+        
 
         #display components
         self.disp_components()
@@ -54,6 +57,16 @@ class VkeyBoard(CTK.CTkTabview):
                     if i < 26:
                         self.keys[k][list(self.keys[k].keys())[i]].grid(row = x, column = y, padx = 1, pady=2)
                         i+=1
-                           
+
+    def add_stackEntries(self,entry):
+        self.stackEntries.append(entry)
+
     def insert_caract(self,c):
-        pass
+        fc = self.stackEntries[0].focus_get()
+        for entry in self.stackEntries:
+            if str(entry)+".!entry" == str(fc):#should be revised before the implementation
+                entry.insert('end', c)
+                
+
+                
+        

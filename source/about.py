@@ -1,5 +1,4 @@
 import customtkinter as CTK
-import string
 
 
 

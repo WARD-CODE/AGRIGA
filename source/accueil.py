@@ -3,6 +3,7 @@ import customtkinter as CTK
 from PIL import Image
 from horloge import Horloge
 from connectivity import Wifistat, Mqttstat
+
 class Accueil:
     def __init__(self,master, *args, **kwargs):
         super().__init__(*args , **kwargs)
@@ -44,14 +45,14 @@ class Accueil:
 
                                  )
         
-        self.datime_objects["time"] = Horloge(self.accueil_frame["mainbar"],"time",text_size=25)
-        self.datime_objects["date"] = Horloge(self.accueil_frame["mainbar"],"date",text_size=20)
+        self.datime_objects["time"] = Horloge(self.accueil_frame["mainbar"],"time",text_size=15)
+        self.datime_objects["date"] = Horloge(self.accueil_frame["mainbar"],"date",text_size=13)
         
         self.connectivity["wifi"] = CTK.CTkButton(master=self.accueil_frame["toolbar"],
                                                         text='',
                                                         width=50,
                                                         height=50,
-                                                        #image=CTK.CTkImage(Image.open("images/network.png"),size=(30,30),),
+                                                        # image=CTK.CTkImage(Image.open("images/network.png"),size=(30,30),),
                                                         corner_radius=100,
                                                         command=lambda:self.Get_wifi()
                                                         )
@@ -61,7 +62,7 @@ class Accueil:
                                                         width=50,
                                                         height=50,
                                                         fg_color="green",
-                                                        #image=CTK.CTkImage(Image.open("images/network.png"),size=(30,30),),
+                                                        # image=CTK.CTkImage(Image.open("images/network.png"),size=(30,30),),
                                                         corner_radius=100,
                                                         command=lambda:self.Get_mqtt()
                                                         )
@@ -70,8 +71,8 @@ class Accueil:
         self.accueil_frame["mainframe"].pack()
         self.accueil_frame["mainbar"].place(relx=0.02,rely=0.02)
         self.logo.place(relx=0.5/2,rely=0.7/2)
-        self.datime_objects["time"].place(relx=0.01,rely=0.12)
-        self.datime_objects["date"].place(relx=0.63,rely=0.12)
+        self.datime_objects["time"].place(relx=0.01,rely=0.15)
+        self.datime_objects["date"].place(relx=0.57,rely=0.14)
         self.accueil_frame["toolbar"].place(relx=0.55/2,rely=0.83)
         self.connectivity["wifi"].place(relx=0.05,rely=0.08)
         self.connectivity["mqtt"].place(relx=0.35,rely=0.08)

@@ -13,7 +13,7 @@ class Horloge(CTK.CTkLabel):
             image_file = "calendar_home.png"
 
         super().__init__(master=master, 
-                         font=CTK.CTkFont('agency FB', text_size), 
+                         font=CTK.CTkFont('OCR A Std', text_size), 
                          fg_color = "transparent",
                          bg_color="transparent",
                          text_color="#30CD4F",
@@ -37,7 +37,7 @@ class Horloge(CTK.CTkLabel):
         self.after(1000, self.update_clock)
     
     def update_calendar(self):
-        current_date = datetime.datetime.now().strftime("%a,%d %b %Y")        
+        current_date = datetime.datetime.now().strftime("%a%d %b %Y")        
         # Update the clock label
         self.configure(text=current_date)
         

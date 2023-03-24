@@ -1,8 +1,10 @@
 
 import customtkinter as CTK
 from PIL import Image
+from traitlets import Any
 from tableframe import TableFrame
-
+from Mesure_label import MesureLabel
+from random import randrange
 
 class Supervision:
     def __init__(self,master,*args,**kwargs):
@@ -11,9 +13,10 @@ class Supervision:
         self.supervision_frame = {}
 
         self.mesures_labels = {}
+        self.mesures_values = {}
 
         self.actionneurs_frame = {}
-        self.actionneurs_components = {}
+
         self.actionneurs_electrovanne_labels = {}
         self.actionneurs_pompe_labels = {}
 
@@ -22,7 +25,6 @@ class Supervision:
         self.historique_frame = {}
         self.histo_button = {}
         self.init_components(master)
-        
         self.disp_components()
 
     def init_components(self,master):
@@ -31,10 +33,7 @@ class Supervision:
         button_text = ["Mesures","Actionneurs","Evatranspiration","Historique"]
         button_icons = ["mesures.png","actionneurs.png","evapotranspiration.png","historique.png"]
 
-        labels_list = ["Temperature", "Humidité","Pression_atm","vitesse_vent","précipitation"]
-        labels_text = ["Temperature", "Humidité","Pression \natmospherique","vitesse du vent","précipitation"]
-        labels_icons = ["temperature.png", "Humidity.png","pression.png","wind.png","precipitation.png"]
-
+        # the supervision overview components
         self.supervision_frame["buttons_frame"] = CTK.CTkFrame(master = master,
                                                                 width = 270,
                                                                 height = 110,
@@ -80,9 +79,22 @@ class Supervision:
         self.menu_button["Evapotranspiration"].configure(command = self.push_evapotranspiration)
         self.menu_button["Historique"].configure(command = self.push_historique)
 
-
         #Mesures fields
-
+        self.mesures_components()
+        #actionneurs field
+        self.actionneurs_components()
+        #evapotranspiration field
+        self.evapotranspiration_components()
+        #historique field
+        self.historique_components()
+        
+        
+    def mesures_components(self):
+        
+        labels_list = ["Temperature", "Humidité","Pression_air","vitesse_vent","précipitation"] 
+        labels_text = ["Temperature\n(C°)", "Humidité\n(%)","Pression d'air\n(P)","Vitesse du vent\n(m/s)","Précipitation\n(v)"]
+        labels_icons = ["temperature.png", "Humidity.png","pression.png","wind.png","precipitation.png"]
+        
         self.mesures_framescroll = CTK.CTkScrollableFrame(master = self.supervision_frame["tabview_1"].tab("Mesures"),
                                                         width = 410,
                                                         height = 330,
@@ -94,22 +106,18 @@ class Supervision:
                                                     font = CTK.CTkFont(size = 20,weight = "bold"))
 
         for label in range(0,5):
-            self.mesures_labels[labels_list[label]] = CTK.CTkLabel(master = self.mesures_framescroll,
-                                                    text=labels_text[label],
-                                                    width = 120,
-                                                    height = 120,
-                                                    font = CTK.CTkFont(size = 12,weight = "bold"),
-                                                    fg_color= "gray",
-                                                    pady = 10,
-                                                    compound="top",
-                                                    image = CTK.CTkImage(Image.open("images/{}".format(labels_icons[label])),size = (40,40)),
-                                                    corner_radius = 15,
-                                                    anchor = "center"
-                                                    )
+            self.mesures_labels[labels_list[label]] = MesureLabel(master=self.mesures_framescroll,
+                                                                        lab_text=labels_text[label],
+                                                                        lab_image=labels_icons[label],
+                                                                        width = 120,
+                                                                        height = 120,
+                                                                        fg_color= "transparent")
+            
+
             
             
-        #actionneurs field
-        
+    def actionneurs_components(self):
+
         self.actionneurs_frame["scroller"] = CTK.CTkScrollableFrame(master = self.supervision_frame["tabview_1"].tab("Actionneurs"),
                                                 width = 410,
                                                 height = 330,
@@ -128,20 +136,20 @@ class Supervision:
                                         fg_color= "transparent",
                                         corner_radius = 15)
         
-        self.actionneurs_components["pompe"] = CTK.CTkEntry(master = self.actionneurs_frame["creation"],
+        self.actionneurs_frame["pompe"] = CTK.CTkEntry(master = self.actionneurs_frame["creation"],
                                                         placeholder_text = "(n) pompes",
                                                         font = CTK.CTkFont(size = 12),
                                                         width = 100,
                                                         height = 35)
 
-        self.actionneurs_components["electrovanne"] = CTK.CTkEntry(master = self.actionneurs_frame["creation"],
+        self.actionneurs_frame["electrovanne"] = CTK.CTkEntry(master = self.actionneurs_frame["creation"],
                                                                 placeholder_text = "(n) electrovannes",
                                                                 font = CTK.CTkFont(size = 12),
                                                                 width = 100,
                                                                 height = 35)
 
                                                                 
-        self.actionneurs_components["creer"] =  CTK.CTkButton(master = self.actionneurs_frame["creation"],
+        self.actionneurs_frame["creer"] =  CTK.CTkButton(master = self.actionneurs_frame["creation"],
                                                     text="créer",
                                                     width = 90,
                                                     height = 30,
@@ -150,25 +158,16 @@ class Supervision:
                                                     hover_color="#295a87",
                                                     corner_radius = 15,
                                                     anchor = "center",
-                                                    command = lambda: self.actionneurs_creator(self.actionneurs_components["pompe"].get(),self.actionneurs_components["electrovanne"].get())
+                                                    command = lambda: self.actionneurs_creator(self.actionneurs_frame["pompe"].get(),self.actionneurs_frame["electrovanne"].get())
                                                     )
         
-        #evapotranspiration field
+    def evapotranspiration_components(self):
         self.evapotranspiration_frame["scroller"] = CTK.CTkScrollableFrame(master = self.supervision_frame["tabview_1"].tab("Evapotranspiration"),
                                                                             width = 410,
                                                                             height = 330,
                                                                             fg_color= "transparent",
                                                                             orientation="horizontal",
                                                                             corner_radius = 15)
-        
-
-        
-        #historique field
-        
-        
-        self.historique_components()
-        
-        
 
     def historique_components(self):
         histo_list = ["parametres atmospheriques", "caracteristiques de la culture","Evapotranspiration d'eau"]
@@ -214,9 +213,6 @@ class Supervision:
             i+=1
             
 
-
-
-
     def disp_components(self):
 
         #general frame
@@ -231,18 +227,18 @@ class Supervision:
 
         #Mesures
         self.mesures_framescroll.place(relx = 0,rely =-.03)
-        self.mesures_labels["Temperature"].grid(row = 1,column = 0, padx =5,pady =5)
-        self.mesures_labels["Humidité"].grid(row = 1,column = 1, padx =5,pady =5)
-        self.mesures_labels["Pression_atm"].grid(row = 1,column = 2, padx =5,pady =5)
-        self.mesures_labels["vitesse_vent"].grid(row = 2,column = 0, padx =5,pady =5)
-        self.mesures_labels["précipitation"].grid(row = 2,column = 1, padx =5,pady =5)
-        
+        self.mesures_labels["Temperature"].grid(row = 1,column = 0, padx =5,pady =3)
+        self.mesures_labels["Humidité"].grid(row = 1,column = 1, padx =5,pady =3)
+        self.mesures_labels["Pression_air"].grid(row = 1,column = 2, padx =5,pady =2)
+        self.mesures_labels["vitesse_vent"].grid(row = 2,column = 0, padx =5,pady =2)
+        self.mesures_labels["précipitation"].grid(row = 2,column = 1, padx =5,pady =2)
+
         #Actionneurs
         self.actionneurs_frame["scroller"].place(relx = 0,rely =-.03)
         self.actionneurs_frame["creation"].pack()
         i=0
         for comp in ("pompe","electrovanne","creer"):
-            self.actionneurs_components[comp].grid(row = 0,column = i, padx = 5, pady = 5)
+            self.actionneurs_frame[comp].grid(row = 0,column = i, padx = 5, pady = 5)
             i+=1
         self.actionneurs_frame["actionneur"].pack()
 
@@ -256,7 +252,7 @@ class Supervision:
         self.histo_button["Evapotranspiration d'eau"].grid(row=2,column=0, pady=7,sticky="nsew")
         
         
-    
+    # additional functions
     def actionneurs_creator(self,pompe,electrovanne):
 
         for k,v in self.actionneurs_pompe_labels.items():
@@ -306,8 +302,6 @@ class Supervision:
             if i>3:
                 i=0
                 m+=1
-
-
     
     def push_mesures(self):
         self.supervision_frame["tabview_1"].set("Mesures")

@@ -1,4 +1,3 @@
-from http.client import OK
 from tkinter import messagebox
 import customtkinter as CTK
 from PIL import Image
@@ -9,6 +8,7 @@ class Mode_irrigation:
     def __init__(self,master,*args,**kwargs):
         super().__init__(*args,**kwargs)
         # define all objects used for the Drip mode
+
         self.menu_button = {} 
         self.mode_irrigation_frame = {}
         self.drip_entries = {}
@@ -16,6 +16,7 @@ class Mode_irrigation:
         self.aspersion_entries = {}
         self.aspersion_buttons = {}
         self.Mode_entry_GG = []
+
 
         #initialize components of the irrigation mode
         self.init_components(master)
@@ -38,7 +39,7 @@ class Mode_irrigation:
                                                     text="Table de configuration Mode Goutte à Goutte",
                                                     font = CTK.CTkFont(size = 18,weight = "bold"))
         
-        # the drip confguration parametes entries (editfields) and application buttons
+        # the drip confguration entries (editfields) and application buttons
         for indx in range(0,3):          
             self.drip_entries[entries_list[indx]] = CTK.CTkEntry(master = self.drip_frame,
                                                                 placeholder_text = entries_text[indx],
@@ -46,7 +47,9 @@ class Mode_irrigation:
                                                                 width = 250,
                                                                 height = 35,
                                                                 justify="center"
+                                                                
                                                                 )
+            # self.drip_entries[entries_list[indx]].bind("<FocusIn>",self.on_entryField)
             
             self.drip_buttons[entries_list[indx]] =  CTK.CTkButton(master = self.drip_frame,
                                                     text="",
@@ -235,6 +238,9 @@ class Mode_irrigation:
     # this callback to switch to the aspersion mode config
     def push_aspersion(self):
         self.mode_irrigation_frame["tabview_1"].set("aspersion")
+    
+    def on_entryField(self,event):
+        pass
 
     """ 
     this callback to apply configuration to each field and to save 
@@ -246,18 +252,25 @@ class Mode_irrigation:
         if not all:
             if re.match(re_f,str(self.drip_entries[field_name].get())):
                 Irrigation.Mode_data_GG[field_name] = float(self.drip_entries[field_name].get())
+                
             else:
                 messagebox.showwarning("valeur incorrecte","la valeur du champ doit etre sous la forme nn.ff")
 
         elif all:
             list_data = ["distance_ligne","espace_gouteur","debit_eau"]
             
+            check=0
             for data in list_data:
                 if re.match(re_f,str(self.drip_entries[data].get())):
                     Irrigation.Mode_data_GG[data] = float(self.drip_entries[data].get())
+                    check+=1
                 else:
-                    messagebox.showwarning("valeur incorrecte","assurer que les valeurs entrées sont correctes")
                     break
+            
+            if check == 3:
+                messagebox.showinfo("validation", "données enregistrés et validés!")
+            else:
+                messagebox.showwarning("valeur incorrecte","assurer que les valeurs entrées sont correctes")
     """ 
     this callback to apply configuration to each field and to save 
     the data in the Irrigation.Mode_data_ASP dictionary 
@@ -275,13 +288,17 @@ class Mode_irrigation:
         elif all:
             list_data = ["diam_gouteur","ecart_gouteur","distance_ligne","pression"]
             
+            check=0
             for data in list_data:
                 if re.match(re_f,str(self.aspersion_entries[data].get())):
                     Irrigation.Mode_data_ASP[data] = float(self.aspersion_entries[data].get())
+                    check+=1
                 else:
-                    messagebox.showwarning("valeur incorrecte","assurer que les valeurs entrées sont correctes")
                     break
+            
+            if check == 3:
+                messagebox.showinfo("validation", "données enregistrés et validés!")
+            else:
+                messagebox.showwarning("valeur incorrecte","assurer que les valeurs entrées sont correctes")
 
 
-
-        

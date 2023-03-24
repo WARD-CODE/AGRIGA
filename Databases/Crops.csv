@@ -1,24 +1,24 @@
-﻿element,L_init,L_dev,L_mid,L_late,Kc_init,Kc_mid,Kc_end,hauteur_max,culture
+element,L_init,L_dev,L_mid,L_late,Kc_init,Kc_mid,Kc_end,hauteur_max,culture
 Haricots verts,20,30,30,10,0.5,1.05,0.9,0.4,Legume
 Haricots secs,20,30,40,20,0.4,1.15,0.35,0.4,Legume
-Féverole,20,30,35,15,0.5,1.15,1.1,0.8,Legume
-féve,20,30,35,15,0.5,1.15,1.1,0.8,Legume
+Feverole,20,30,35,15,0.5,1.15,1.1,0.8,Legume
+feve,20,30,35,15,0.5,1.15,1.1,0.8,Legume
 Grame verte,20,30,30,20,0.4,1.05,0.6,0.4,Legume
-niï¿½bï¿½,20,30,30,20,0.4,1.05,0.35,0.4,Legume
+nieb,20,30,30,20,0.4,1.05,0.35,0.4,Legume
 Arachide,35,45,35,25,0.4,1.15,0.6,0.4,Legume
 Lentille,20,30,60,40,0.4,1.1,0.3,0.5,Legume
 Petits pois,20,30,35,15,0.5,1.15,1.1,0.5,Legume
 Soja,20,35,60,25,0.4,1.15,0.5,0.75,Legume
-Graines de ricin,25,40,65,50,0.35,1.15,0.55,0.3,cultures oléagineuses
-Carthame,25,35,55,30,0.35,1.1,0.35,0.6,cultures oléagineuses
-Sï¿½same,20,30,40,20,0.35,1.1,0.25,1,cultures oléagineuses
-Tournesol,25,35,45,25,0.35,1.1,0.35,2,cultures oléagineuses
-Artichaut,40,40,250,30,0.5,1,0.95,0.7,légumes vivaces
-Asperges,90,30,200,45,0.5,0.95,0.3,0.5,légumes vivaces
-Fraises,10,21,18,18,0.4,0.85,0.75,0.2,légumes vivaces
+Graines de ricin,25,40,65,50,0.35,1.15,0.55,0.3,cultures oleagineuses
+Carthame,25,35,55,30,0.35,1.1,0.35,0.6,cultures oleagineuses
+S�same,20,30,40,20,0.35,1.1,0.25,1,cultures oleagineuses
+Tournesol,25,35,45,25,0.35,1.1,0.35,2,cultures oleagineuses
+Artichaut,40,40,250,30,0.5,1,0.95,0.7,legumes vivaces
+Asperges,90,30,200,45,0.5,0.95,0.3,0.5,legumes vivaces
+Fraises,10,21,18,18,0.4,0.85,0.75,0.2,legumes vivaces
 Betteraves,15,25,20,10,0.5,1.05,0.95,0.4,Racines et Tubercules
-Manioc 1ere année,20,40,90,60,0.3,0.8,0.3,1,Racines et Tubercules
-Manioc 2eme année,150,40,110,60,0.3,1.1,0.5,1.5,Racines et Tubercules
+Manioc 1ere annee,20,40,90,60,0.3,0.8,0.3,1,Racines et Tubercules
+Manioc 2eme annee,150,40,110,60,0.3,1.1,0.5,1.5,Racines et Tubercules
 Pomme de terre,30,35,50,30,0.5,1.15,0.75,0.6,Racines et Tubercules
 Patate douce,20,30,60,40,0.5,1.15,0.65,0.4,Racines et Tubercules
 Betterave sucre,25,35,50,50,0.35,1.2,0.7,0.5,petites legume
@@ -26,22 +26,22 @@ Broccoli,35,45,40,15,0.7,1.05,0.95,0.3,petites legume
 Chou,40,60,50,15,0.7,1.05,0.95,0.4,petites legume
 Carottes,30,40,60,20,0.7,1.05,0.95,0.3,petites legume
 Chou-fleur,35,50,40,15,0.7,1.05,0.95,0.4,petites legume
-Céleri,25,40,45,15,0.7,1.05,1,0.6,petites legume
+Celeri,25,40,45,15,0.7,1.05,1,0.6,petites legume
 Crucifieres,20,30,20,10,0.7,1,0.7,0.3,petites legume
 Salade,20,30,15,10,0.7,1,0.95,0.3,petites legume
 Oignon sec,15,25,70,40,0.7,1.05,0.75,0.4,petites legume
 Onion green,20,45,20,10,0.7,1,1,0.3,petites legume
 Onion seed,20,45,165,45,0.7,1.05,0.8,0.5,petites legume
-épinard,20,30,40,10,0.7,1,0.95,0.3,petites legume
+epinard,20,30,40,10,0.7,1,0.95,0.3,petites legume
 radis,5,10,15,5,0.7,0.9,0.85,0.3,petites legume
-Cantaloup,30,45,35,10,0.5,0.85,0.6,0.3,concombres de légumes
-Concombre,20,30,40,15,0.6,1.002,0.75,0.3,concombres de légumes
-courge d'hiver,25,35,35,25,0.5,1,0.8,0.4,concombres de légumes
-Citrouille,25,35,35,25,0.5,1,0.8,0.4,concombres de légumes
-courgette,20,30,25,15,0.5,0.95,0.75,0.3,concombres de légumes
-courge,20,30,25,15,0.5,0.95,0.75,0.3,concombres de légumes
-Melons,30,30,50,30,0.5,1.05,0.75,0.4,concombres de légumes
-pastèque,10,20,20,30,0.4,1,0.75,0.4,concombres de légumes
-Aubergine,30,45,40,25,0.6,1.05,0.9,0.8,solanums végétaux
-Poivrons doux ,30,40,110,30,0.6,1.05,0.9,0.7,solanums végétaux
-Tomate,25,40,60,30,0.6,1.15,0.8,0.6,solanums végétaux
+Cantaloup,30,45,35,10,0.5,0.85,0.6,0.3,concombres de legumes
+Concombre,20,30,40,15,0.6,1.002,0.75,0.3,concombres de legumes
+courge d'hiver,25,35,35,25,0.5,1,0.8,0.4,concombres de legumes
+Citrouille,25,35,35,25,0.5,1,0.8,0.4,concombres de legumes
+courgette,20,30,25,15,0.5,0.95,0.75,0.3,concombres de legumes
+courge,20,30,25,15,0.5,0.95,0.75,0.3,concombres de legumes
+Melons,30,30,50,30,0.5,1.05,0.75,0.4,concombres de legumes
+past�que,10,20,20,30,0.4,1,0.75,0.4,concombres de legumes
+Aubergine,30,45,40,25,0.6,1.05,0.9,0.8,solanums vegetaux
+Poivrons doux ,30,40,110,30,0.6,1.05,0.9,0.7,solanums vegetaux
+Tomate,25,40,60,30,0.6,1.15,0.8,0.6,solanums vegetaux

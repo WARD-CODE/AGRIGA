@@ -1,13 +1,13 @@
 
-from os import stat
-from sre_parse import State
 import customtkinter as CTK
 from PIL import Image
-from tkinter import Variable, messagebox
+from tkinter import  messagebox
 from data_exchange import Irrigation
 from DateTime import Vcalender
 from DateTime import Vclock
 import re
+import csv
+
 class parametre_irrigation:
 
     def __init__(self,master,*args,**kwargs):
@@ -116,7 +116,7 @@ class parametre_irrigation:
 
             
         self.culture_entries["surface"] = CTK.CTkEntry(master = self.culture_frame,
-                                                        placeholder_text = "surface",
+                                                        placeholder_text = "surface (m²)",
                                                         font = CTK.CTkFont(size = 17),
                                                         width =170,
                                                         height = 35)
@@ -125,17 +125,20 @@ class parametre_irrigation:
                                                             width=170,
                                                             height=30,
                                                             corner_radius=13,
-                                                            values=["empty"],   
+                                                            values=self.get_culturelist(),   
                                                             font = CTK.CTkFont(size = 14)
+                                                            
                                                             )
+        self.culture_entries["culture"].configure(command=self.get_elementlist)
         
         self.culture_entries["element"] =  CTK.CTkComboBox(master = self.culture_frame,
                                                             width=160,
                                                             height=30,
                                                             corner_radius=13,
-                                                            values=["empty"],   
+                                                            values=["aucun"],   
                                                             font = CTK.CTkFont(size = 14)
                                                             )
+        
         self.culture_buttons["Kc_saison"] = CTK.CTkButton(master=self.culture_frame,
                                                           text="",
                                                           width=15,
@@ -143,6 +146,7 @@ class parametre_irrigation:
                                                           image = CTK.CTkImage(Image.open("images/calendar.png"),size = (20,20)),
                                                           command = self.push_date
                                                           )
+        
         self.culture_entries["Kc_saison"] = CTK.CTkEntry(master = self.culture_frame,
                                                         placeholder_text = "(jj/mm/aaaa)",
                                                         font = CTK.CTkFont(size = 17),
@@ -161,7 +165,6 @@ class parametre_irrigation:
                                                          text="auto",
                                                          width=20,
                                                          command=self.auto_kc
-
                                                          )
         
         for button in buttons_list:
@@ -177,6 +180,7 @@ class parametre_irrigation:
                                                     anchor = "center",
                                                     command=lambda s=button:self.appliquer_param_CUL(s)
                                                     )   
+            
         self.culture_buttons["appliquer tout"] = CTK.CTkButton(master = self.param_irrigation_frame["tabview_1"].tab("culture"),
                                                     text="appliquer tout",
                                                     width = 180,
@@ -302,6 +306,27 @@ class parametre_irrigation:
             self.culture_entries["Kc"].configure(state=CTK.NORMAL)
             self.culture_entries["Kc_saison"].configure(state=CTK.DISABLED)
 
+    def get_culturelist(self)->list:
+        liste=[]
+        with open("Databases/Crops.csv","r") as fl:
+            csv_file = csv.DictReader(fl)
+            for line in csv_file:
+                liste.append(line["culture"])
+        
+        return list(set(liste))
+
+    def get_elementlist(self,event):
+        liste=[]
+        culture = str(self.culture_entries["culture"].get())
+        with open("Databases/Crops.csv","r") as fl:
+            csv_file = csv.DictReader(fl)
+            for line in csv_file:
+                if culture == line["culture"]:
+                    liste.append(line["element"])
+
+        self.culture_entries["element"].configure(values = list(set(liste)))
+        self.culture_entries["element"].set(list(set(liste))[0])
+        
     def appliquer_param_IRG(self, field_name='', all=False):
         re_hour= r'^\d{1,2}:\d{2}-([AP]M)$'
         if not all:
@@ -338,7 +363,7 @@ class parametre_irrigation:
 
     def appliquer_param_CUL(self, field_name="", all=False):
         
-        re_date = r'^\d{2}/\d{2}/\d{4}$'
+        re_date = r'^\d{1,2}/\d{2}/\d{4}$'
         re_surf = r'^\d{2}.\d{1,3}$'
         re_kc = r'^0(\.\d+)?|1(\.0+)?$'
 

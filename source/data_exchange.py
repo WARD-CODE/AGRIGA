@@ -52,3 +52,16 @@ class Irrigation:
         "signal":"-65dBm"
     }
 
+    mqtt_data={
+        "état":"connecté",
+        "topic":"----------"
+    }
+
+    sensors_data={
+        "Temperature":0.0,
+        "Humidity":0.0,
+        "pressure_atm":0.0,
+        "air_velocity":0.0,
+        "precipetation":0.0
+    }
+    
