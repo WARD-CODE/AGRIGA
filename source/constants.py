@@ -10,6 +10,11 @@ class constants:
     signIN_wind_dim = (300,250)
     signIN_frame1_dim = (210,90)
 
+    location = {
+                "q":"Oran",
+            "appid":"be196491245269d974798fae42fe1c94",
+            "units":"metric"
+            }
 
     user_data =["admin", "1234"]
     
