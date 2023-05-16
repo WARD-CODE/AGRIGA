@@ -59,9 +59,8 @@ class Irrigation:
 
     sensors_data={
         "Temperature":0.0,
-        "Humidity":0.0,
-        "pressure_atm":0.0,
-        "air_velocity":0.0,
-        "precipetation":0.0
+        "Humidité":0.0,
+        "Pression_air":0.0,
+        "vitesse_vent":0.0,
+        "précipitation":0.0
     }
-    

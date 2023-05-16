@@ -10,7 +10,6 @@ class MesureLabel(CTK.CTkFrame):
 
         self.init_components(lab_text,lab_image)
         self.disp_components()
-        self.update_mesures()
 
     def init_components(self,lab_text, lab_image):
 
@@ -41,14 +40,8 @@ class MesureLabel(CTK.CTkFrame):
         self.val.grid(row = 1,column=0)
 
 
-    def update_mesures(self):
-        current_val = round(random.uniform(-10,80),2)
-        self.val.configure(text = "{:.2f}".format(current_val))
-        self.val.after(2000, self.update_mesures)
+    def update_value(self,value):
+        self.val.configure(text = "{:.2f}".format(value))
 
-        if current_val > 40:
-            self.lab.configure(fg_color= "red")
-        else:
-            self.lab.configure(fg_color= "gray")
 
 

@@ -382,12 +382,12 @@ class parametre_irrigation:
                 if int(self.culture_entries["auto"].get()) == 1:       
                     if re.match(re_date,str(self.culture_entries["Kc_saison"].get())):
                         self.culture_entries["Kc"].configure(text=self.get_Kc(self.culture_entries["Kc_saison"].get()))
-                        Irrigation.param_data_CUL[field_name] = str(self.culture_entries[field_name].get())
+                        Irrigation.param_data_CUL[field_name] = float(self.culture_entries[field_name].get())
                     else:
                         messagebox.showwarning("valeur incorrecte","la valeur du champ doit etre sous la forme dd/mm/aaaa")
                 else:
                     if re.match(re_kc,str(self.culture_entries["Kc"].get())):
-                        Irrigation.param_data_CUL[field_name] = str(self.culture_entries[field_name].get())
+                        Irrigation.param_data_CUL[field_name] = float(self.culture_entries[field_name].get())
                     else:
                         messagebox.showwarning("valeur incorrecte","la valeur du champ doit etre compris entre 0.0->1.0")
                         
@@ -403,11 +403,11 @@ class parametre_irrigation:
                 if int(self.culture_entries["auto"].get()) == 1:       
                     if re.match(re_date,str(self.culture_entries["Kc_saison"].get())):
                         self.culture_entries["Kc"].configure(text=self.get_Kc(self.culture_entries["Kc_saison"].get()))
-                        Irrigation.param_data_CUL[field_name] = str(self.culture_entries[field_name].get())
+                        Irrigation.param_data_CUL[field_name] = float(self.culture_entries[field_name].get())
                         checker+=1
                 else:
                     if re.match(re_kc,str(self.culture_entries["Kc"].get())):
-                        Irrigation.param_data_CUL["Kc"] = str(self.culture_entries["Kc"].get())
+                        Irrigation.param_data_CUL["Kc"] = float(self.culture_entries["Kc"].get())
                         checker+=1
                 
                 if checker == 3:

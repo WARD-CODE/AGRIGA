@@ -21,7 +21,7 @@ class App(CTK.CTk):
         self.window_configuration()
         self.init_components()
         self.disp_components()
-        #self.sign_in()
+        self.sign_in()
 
     
     def sign_in(self):
@@ -79,6 +79,7 @@ class App(CTK.CTk):
                                     text = "",
                                     image = CTK.CTkImage(Image.open("images/safitech.png"),size = (70,55)),
                                     )
+        
         self.safitech_logo.bind("<Enter>",self.logo_enter)
         self.safitech_logo.bind("<Leave>",self.logo_leave)
         self.safitech_logo.bind("<Button-1>",self.get_about)

@@ -1,10 +1,11 @@
 
 import customtkinter as CTK
 from PIL import Image
-from traitlets import Any
 from tableframe import TableFrame
 from Mesure_label import MesureLabel
-from random import randrange
+from Evapotranspiration import ETc
+from data_exchange import Irrigation
+from tkinter import  messagebox as mbx
 
 class Supervision:
     def __init__(self,master,*args,**kwargs):
@@ -24,8 +25,12 @@ class Supervision:
 
         self.historique_frame = {}
         self.histo_button = {}
+
+
+        
         self.init_components(master)
         self.disp_components()
+        self.update_mesures()
 
     def init_components(self,master):
 
@@ -162,13 +167,39 @@ class Supervision:
                                                     )
         
     def evapotranspiration_components(self):
-        self.evapotranspiration_frame["scroller"] = CTK.CTkScrollableFrame(master = self.supervision_frame["tabview_1"].tab("Evapotranspiration"),
-                                                                            width = 410,
-                                                                            height = 330,
-                                                                            fg_color= "transparent",
-                                                                            orientation="horizontal",
-                                                                            corner_radius = 15)
 
+        self.evapotranspiration_frame["evapotranspiration"]=MesureLabel(master=self.supervision_frame["tabview_1"].tab("Evapotranspiration"),
+                                                                        lab_text="Evapotranspiration\n(mm)",
+                                                                        lab_image="evapotranspiration.png",
+                                                                        width = 120,
+                                                                        height = 120,
+                                                                        fg_color= "transparent"
+                                                                        )
+        
+        self.evapotranspiration_frame["latitude"] = CTK.CTkEntry(master=self.supervision_frame["tabview_1"].tab("Evapotranspiration"),
+                                                        placeholder_text = "latitude(C°)",
+                                                        font = CTK.CTkFont(size = 12),
+                                                        width = 100,
+                                                        height = 35)
+        
+        self.evapotranspiration_frame["longitude"] = CTK.CTkEntry(master=self.supervision_frame["tabview_1"].tab("Evapotranspiration"),
+                                                                placeholder_text = "longitude(C°)",
+                                                                font = CTK.CTkFont(size = 12),
+                                                                width = 100,
+                                                                height = 35)
+        
+        self.evapotranspiration_frame["obtenir"] = CTK.CTkButton(master=self.supervision_frame["tabview_1"].tab("Evapotranspiration"),
+                                                                text="obtenir",
+                                                                width = 90,
+                                                                height = 30,
+                                                                font = CTK.CTkFont(size = 12,weight = "bold"),
+                                                                fg_color= "#184873",
+                                                                hover_color="#295a87",
+                                                                corner_radius = 15,
+                                                                anchor = "center",
+                                                                command = self.get_evapotranspiration
+                                                                )
+                    
     def historique_components(self):
         histo_list = ["parametres atmospheriques", "caracteristiques de la culture","Evapotranspiration d'eau"]
         self.historique_frame["frame"] = CTK.CTkFrame(master = self.supervision_frame["tabview_1"].tab("Historique"),
@@ -242,6 +273,12 @@ class Supervision:
             i+=1
         self.actionneurs_frame["actionneur"].pack()
 
+        # evapotranspiration
+        
+        self.evapotranspiration_frame["evapotranspiration"].place(relx = 0.1,rely =0.1)
+        self.evapotranspiration_frame["latitude"].place(relx = 0.6,rely =0.1)
+        self.evapotranspiration_frame["longitude"].place(relx = 0.6,rely =0.3)
+        self.evapotranspiration_frame["obtenir"].place(relx = 0.6,rely =0.5)
         #historique
         self.historique_title.pack()
         self.historique_frame["frame"].pack()
@@ -323,5 +360,27 @@ class Supervision:
         elif b==3:
             return TableFrame("evapotranspiration.csv")
 
+    
+
+    def update_mesures(self):   
+        labels_list = ["Temperature", "Humidité","Pression_air","vitesse_vent","précipitation"] 
+        for label in labels_list:
+            self.mesures_labels[label].update_value(Irrigation.sensors_data[label])
+            
+        self.mesures_framescroll.after(20000, self.update_mesures)
 
 
+    def get_evapotranspiration(self):
+
+        
+        if Irrigation.param_data_CUL["Kc"] != 0.0:
+            location = (float(self.evapotranspiration_frame["latitude"].get()),float(self.evapotranspiration_frame["longitude"].get()))
+            etc = ETc(Kc=Irrigation.param_data_CUL["Kc"],
+                    location=location,
+                    url="http://api.openweathermap.org/data/2.5/forecast",
+                    appid="be196491245269d974798fae42fe1c94",
+                    units="metric")
+            
+            self.evapotranspiration_frame["evapotranspiration"].update_value(etc.etc_calculation())
+        else:
+            mbx.showwarning("valeur Kc","verfier la valeur du coefficient Kc")
