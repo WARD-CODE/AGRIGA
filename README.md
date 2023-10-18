@@ -1,5 +1,5 @@
 # AGRICULTURE AND IRRIGATION SYSTEM (USER INTERFACE)
-This project presents a Desktop User Interface for a Agriculture purpose, it main goal is to find the Irrigation parameters based on weather data calculated of a specific area, not only that but it is also connected to sensors and actuators to control the flow of water based on the Evapotranspiration schedule.
+This project presents a Desktop User Interface for a Agriculture purposes. Its main goal is to find the Irrigation parameters based on weather data calculated of a specific area, not only that but it is also connected to sensors and actuators to control the flow of water based on the Evapotranspiration schedule.
 this system includes 5 units:
  - The weather data unit.
  - The irrigation mode selection.
